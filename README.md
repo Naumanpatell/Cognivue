@@ -1,4 +1,4 @@
-# InsightXR — Multimodal Video Intelligence System
+# cognivue — Multimodal Video Intelligence System
 
 ## Overview
 InsightXR is a full-stack AI-powered web platform that converts videos into structured insights using speech recognition, computer vision, and natural language processing (NLP).  
