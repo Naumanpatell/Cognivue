@@ -1,39 +1,41 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
-import '../styles/AuthStyle.css';
+import { useState } from 'react'
+import { supabase } from '../lib/supabase'
+import '../styles/AuthStyle.css'
 
-function AuthPage() {
-  const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+export default function Auth() {
+  const [loading, setLoading] = useState(false)
+  const [isLogin, setIsLogin] = useState(true)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [message, setMessage] = useState('')
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage('');
+  const handleAuth = async (event) => {
+    event.preventDefault()
+    setLoading(true)
+    setMessage('')
 
     try {
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({
           email,
           password,
-        });
-        if (error) throw error;
-        navigate('/main');
+        })
+        if (error) throw error
+        setMessage('Login successful!')
       } else {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-        });
-        if (error) throw error;
-        navigate('/main');
+        })
+        if (error) throw error
+        setMessage('Check your email for verification!')
       }
     } catch (error) {
-      setMessage(error.message);
+      setMessage(error.message)
+    } finally {
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <div className="auth-page">
@@ -55,7 +57,7 @@ function AuthPage() {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleAuth}>
           <input
             type="email"
             placeholder="Email"
@@ -70,15 +72,13 @@ function AuthPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit">
-            {isLogin ? 'Login' : 'Sign Up'}
+          <button type="submit" disabled={loading}>
+            {loading ? 'Loading...' : (isLogin ? 'Login' : 'Sign Up')}
           </button>
         </form>
 
         {message && <div className="message">{message}</div>}
       </div>
     </div>
-  );
+  )
 }
-
-export default AuthPage;
