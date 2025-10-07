@@ -1,5 +1,6 @@
 import React from "react";
 import '../styles/HomeStyle.css'
+import { useNavigate } from "react-router-dom";
 
 
 // This is just the landing page, if u guys want to make it so this is the actual page
@@ -8,6 +9,7 @@ import '../styles/HomeStyle.css'
 
 
 function HomePage() {
+  const navigate = useNavigate();
     return (
       <div className="home-container">
         <header className="home-header">
@@ -15,11 +17,11 @@ function HomePage() {
           <p className="tagline">AI-Powered Video Analysis Platform</p>
         </header>
         <main className="home-main">
-            // the hero needs to be improved, but debating animating
+            {/* the hero needs to be improved, but debating animating */}
           <section className="hero-section">
             <h2>Extract Insights from Your Videos</h2>
             <p>Upload a video and get automatic transcription, summaries, sentiment analysis, and more</p>
-            <button className="cta-button" onClick={() => {console.log("Started button pressed")}}>Get Started</button>
+            <button className="cta-button" onClick={() => {navigate('/auth')}}>Get Started</button>
           </section>
 
 
