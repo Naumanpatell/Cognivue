@@ -1,6 +1,162 @@
-.headerDiv {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 1rem 2rem;
+/* instead oof using colors constsntly, im using variables to make code more readable */
+:root {
+  --primary-dark: #0a1128;
+  --secondary-dark: #080d1d;
+  --primary-orange: #EE964B;
+  --primary-navy: #084B83;
+  --primary-cyan: #06BEE1;
+  --white: #FFFFFF;
+  --light-gray: #f8f9fa;
+}
+
+.home-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a1128, #080d1d);
+  color: var(--white);
+}
+
+.home-header {
+  text-align: center;
+  padding: 4rem 1rem 3rem;
+  position: relative;
+}
+
+.home-header h1 {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-orange) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  color: var(--primary-cyan);
+  opacity: 0.9;
+}
+
+.home-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.hero-section {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding: 3rem 1rem;
+}
+
+.hero-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--white);
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: var(--primary-cyan);
+  opacity: 0.85;
+}
+
+.cta-button {
+  background: var(--primary-orange);
+  color: var(--white);
+  border: none;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(238, 150, 75, 0.3);
+}
+
+.cta-button:hover {
+  background: #ff9d4f;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(238, 150, 75, 0.4);
+}
+
+.cta-button:active {
+  transform: translateY(-1px);
+}
+
+.features-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 2.5rem;
+  border-radius: 20px;
+  border: 1px solid rgba(6, 190, 225, 0.15);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--primary-cyan) 0%, var(--primary-orange) 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--primary-cyan);
+  box-shadow: 0 15px 40px rgba(6, 190, 225, 0.2);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-orange);
+  position: relative;
+  z-index: 1;
+}
+
+.feature-card p {
+  color: var(--white);
+  opacity: 0.9;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+
+/* First draft at Responsive Design */
+@media (max-width: 768px) {
+  .home-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-section h2 {
+    font-size: 2rem;
+  }
+
+  .hero-section p {
+    font-size: 1rem;
+  }
+
+  .features-section {
+    grid-template-columns: 1fr;
+  }
 }
