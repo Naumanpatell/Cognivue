@@ -78,6 +78,6 @@ insightxr/
 
 ## Contributors:
 -Afonso 
--Nauman
--Mahant  
+-Nauman Patel
+-Mahant Lacximikant
 
