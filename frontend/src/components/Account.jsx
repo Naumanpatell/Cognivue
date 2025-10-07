@@ -49,6 +49,20 @@ export default function Account({ session }) {
     setLoading(true)
     const { user } = session
 
+    // going to check if username is unique
+    // this helps stop a confusing error message from happening
+    const {data: existingUsername} = await supabase.from('profiles').select('username').eq('username', username).single()
+    if (existingUsername) {
+      alert("The username is already taken, please try another one")
+      setLoading(false)
+      return
+    }
+    setLoading(false)
+    navigate('/main')
+  }
+
+  async function updateProfilePicture(event, avatarUrl) {
+    const { user } = session
     const updates = {
       id: user.id,
       username,
@@ -62,21 +76,20 @@ export default function Account({ session }) {
       alert(error.message)
     } else {
       setAvatarUrl(avatarUrl)
-      navigate('/main')
     }
-    setLoading(false)
   }
 
   return (
     <div className="onboarding-container">
       <form onSubmit={updateProfile} className="form-widget">
+        <div className="avatar-section">
           <Avatar
         url={avatar_url}
-        size={150}
+        size={350}
         onUpload={(event, url) => {
-          updateProfile(event, url)
+          updateProfilePicture(event, url)
         }}
-      />
+      /></div>
         <div>
           <label htmlFor="email">Email</label>
           <input id="email" type="text" value={session.user.email} disabled />
@@ -102,7 +115,7 @@ export default function Account({ session }) {
 
         <div>
           <button className="button block primary" type="submit" disabled={loading}>
-            {loading ? 'Loading ...' : 'Update'}
+            {loading ? 'Loading ...' : 'Proceed'}
           </button>
         </div>
 

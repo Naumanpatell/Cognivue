@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import '../styles/AuthStyle.css'
+import { useNavigate } from 'react-router-dom'
 
 export default function Auth() {
   const [loading, setLoading] = useState(false)
@@ -8,7 +9,8 @@ export default function Auth() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
-
+  const navigate = useNavigate()
+  
   const handleAuth = async (event) => {
     event.preventDefault()
     setLoading(true)
@@ -20,8 +22,12 @@ export default function Auth() {
           email,
           password,
         })
-        if (error) throw error
-        setMessage('error: ' + error.message)
+        if (error){ 
+          setMessage('error: ' + error.message)
+          throw error
+        } else {
+          navigate('/main')
+        }
       } else {
         const { error } = await supabase.auth.signUp({
           email,

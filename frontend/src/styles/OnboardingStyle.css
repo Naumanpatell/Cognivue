@@ -178,6 +178,76 @@
 
 /* Avatar section styling */
 .avatar-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+}
+
+.avatar-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
+  object-fit: cover;
+  background: var(--light-gray);
+  border: 3px solid rgba(6, 190, 225, 0.2);
+  transition: all 0.3s ease;
+}
+
+.avatar-image:hover {
+  border-color: var(--primary-cyan);
+  transform: scale(1.02);
+}
+
+.avatar-placeholder {
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
+  background: var(--light-gray);
+  border: 3px dashed rgba(6, 190, 225, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-navy);
+  font-size: 0.9rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.avatar-placeholder:hover {
+  border-color: var(--primary-cyan);
+  background: rgba(6, 190, 225, 0.1);
+}
+
+.upload-button {
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, var(--primary-orange), #f4a261);
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(238, 150, 75, 0.3);
+}
+
+.upload-button:hover {
+  background: linear-gradient(135deg, var(--primary-navy), #0d4f8c);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(8, 75, 131, 0.4);
+}
+
+.avatar-section {
   text-align: center;
   margin-bottom: 2rem;
   padding: 1.5rem;
