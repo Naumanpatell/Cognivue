@@ -7,8 +7,32 @@ It demonstrates skills in AI model integration, full-stack development, and scal
 
 ---
 
-## Project Structure
+## Features
+- Upload and process video files  
+- Automatic speech-to-text transcription using Whisper  
+- Object and scene detection with Hugging Face vision models  
+- Text summarization, topic extraction, and sentiment analysis  
+- Interactive React dashboard with charts and keyword visualization  
+- Modular and scalable Flask REST API  
 
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|--------|-------------|
+| Frontend | React.js, Chart.js, Axios, CSS |
+| Backend | Python, Flask, REST API |
+| AI Models | Hugging Face Transformers, Whisper |
+| Data Processing | OpenCV, Librosa, JSON |
+| Storage | Local / AWS S3 / SQLite |
+| Visualization | Chart.js, D3.js |
+
+---
+
+## 📂 Project Structure
+
+```bash
 insightxr/
 │
 ├── backend/                             # Flask backend (AI + API)
@@ -52,29 +76,3 @@ insightxr/
         └── services/
             └── api.js
 
----
-
-## Features
-- Upload and process video files  
-- Automatic speech-to-text transcription using Whisper  
-- Object and scene detection with Hugging Face vision models  
-- Text summarization, topic extraction, and sentiment analysis  
-- Interactive React dashboard with charts and keyword visualization  
-- Modular and scalable Flask REST API  
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|--------|-------------|
-| Frontend | React.js, Chart.js, Axios, CSS |
-| Backend | Python, Flask, REST API |
-| AI Models | Hugging Face Transformers, Whisper |
-| Data Processing | OpenCV, Librosa, JSON |
-| Storage | Local / AWS S3 / SQLite |
-| Visualization | Chart.js, D3.js |
-
----
-
-#
