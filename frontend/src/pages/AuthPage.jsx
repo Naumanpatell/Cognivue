@@ -21,14 +21,14 @@ export default function Auth() {
           password,
         })
         if (error) throw error
-        setMessage('Login successful!')
+        setMessage('error: ' + error.message)
       } else {
         const { error } = await supabase.auth.signUp({
           email,
           password,
         })
         if (error) throw error
-        setMessage('Check your email for verification!')
+        setMessage('error: ' + error.message)
       }
     } catch (error) {
       setMessage(error.message)

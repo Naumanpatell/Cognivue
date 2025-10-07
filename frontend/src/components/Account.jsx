@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import Avatar from './Avatar'
+import '../styles/OnboardingStyle.css'
 
 export default function Account({ session }) {
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
+  const [firstname, setFirstname] = useState(null)
+  const [lastname, setLastname] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
 
   useEffect(() => {
@@ -57,45 +62,56 @@ export default function Account({ session }) {
       alert(error.message)
     } else {
       setAvatarUrl(avatarUrl)
+      navigate('/main')
     }
     setLoading(false)
   }
 
   return (
-    <form onSubmit={updateProfile} className="form-widget">
-        <Avatar
-      url={avatar_url}
-      size={150}
-      onUpload={(event, url) => {
-        updateProfile(event, url)
-      }}
-    />
-      <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={session.user.email} disabled />
-      </div>
-      <div>
-        <label htmlFor="username">Name</label>
-        <input
-          id="username"
-          type="text"
-          required
-          value={username || ''}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
+    <div className="onboarding-container">
+      <form onSubmit={updateProfile} className="form-widget">
+          <Avatar
+        url={avatar_url}
+        size={150}
+        onUpload={(event, url) => {
+          updateProfile(event, url)
+        }}
+      />
+        <div>
+          <label htmlFor="email">Email</label>
+          <input id="email" type="text" value={session.user.email} disabled />
+        </div>
+        <div>
+          <label htmlFor="firstname">First Name</label>
+          <input id="firstname" type="text" value={firstname || ''} onChange={(e) => setFirstname(e.target.value)} />
+        </div>
+        <div>
+          <label htmlFor="lastname">Last Name</label>
+          <input id="lastname" type="text" value={lastname || ''} onChange={(e) => setLastname(e.target.value)} />
+        </div>
+        <div>
+          <label htmlFor="username">Username</label>
+          <input
+            id="username"
+            type="text"
+            required
+            value={username || ''}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
 
-      <div>
-        <button className="button block primary" type="submit" disabled={loading}>
-          {loading ? 'Loading ...' : 'Update'}
-        </button>
-      </div>
+        <div>
+          <button className="button block primary" type="submit" disabled={loading}>
+            {loading ? 'Loading ...' : 'Update'}
+          </button>
+        </div>
 
-      <div>
-        <button className="button block" type="button" onClick={() => supabase.auth.signOut()}>
-          Sign Out
-        </button>
-      </div>
-    </form>
+        <div>
+          <button className="button block" type="button" onClick={() => supabase.auth.signOut()}>
+            Sign Out
+          </button>
+        </div>
+      </form>
+    </div>
   )
 }

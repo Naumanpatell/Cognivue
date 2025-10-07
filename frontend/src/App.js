@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { supabase } from './lib/supabase'
 import HomePage from './pages/HomePage'
 import Auth from './pages/AuthPage'
+import MainPage from './pages/MainPage'
 import Account from './components/Account'
 
 function App() {
@@ -21,10 +22,11 @@ function App() {
 
   return (
     <Router>
-      <div className="container" style={{ padding: '50px 0 100px 0' }}>
+      <div className="container">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/auth" element={!session ? <Auth /> : <Account key={session.user.id} session={session} />} />
+          <Route path="/main" element={<MainPage />} />
         </Routes>
       </div>
     </Router>

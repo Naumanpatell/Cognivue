@@ -2,8 +2,7 @@ import React from "react";
 import '../styles/HomeStyle.css'
 
 
-// This is just the landing page, if u guys want to make it so this is the actual page
-// with all the features i can just remove it
+// This is where most of the features are going to be, still working on it
 
 
 
@@ -12,7 +11,7 @@ function MainPage() {
       <div className="home-container">
         <header className="home-header">
           <h1>InsightXR</h1>
-          <p className="tagline">AI-Powered Video Analysis Platform</p>
+          <p className="tagline">THIS IS JUST A COPY OF THE LANDING PAGE, IM GOING TO CHANGE IT SOON</p>
         </header>
       </div>
     );
