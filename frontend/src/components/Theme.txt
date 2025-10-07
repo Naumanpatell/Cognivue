@@ -1,5 +1,32 @@
-#131200
-#EE964B
-#084B83
-#06BEE1
-#FFFFFF
+Color Scheme:
+    --primary-dark: #0a1128;
+  --secondary-dark: #1C084A;
+  --primary-orange: #EE964B;
+  --primary-navy: #084B83;
+  --primary-cyan: #06BEE1;
+  --white: #FFFFFF;
+  --light-gray: #f8f9fa;
+  --soft-blue: #e3f2fd;
+  --card-bg: #fafbfc;
+  --shadow-light: rgba(10, 17, 40, 0.08);
+  --shadow-medium: rgba(10, 17, 40, 0.12);
+  --shadow-cyan: rgba(6, 190, 225, 0.25);
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+OLD COLOR SCHEME:
+    #0a1128;   --secondary-dark: 
+    #1C084A;   --primary-orange: 
+    #EE964B;   --primary-navy: 
+    #084B83;   --primary-cyan: 
+    #06BEE1;   --white: 
+    #FFFFFF;   --light-gray: 
+    #f8f9fa;

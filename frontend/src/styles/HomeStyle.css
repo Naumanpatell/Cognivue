@@ -1,84 +1,148 @@
 /* instead oof using colors constsntly, im using variables to make code more readable */
+/* Changed colors to ones specified, original color scheme is in theme.txt*/
 :root {
   --primary-dark: #0a1128;
-  --secondary-dark: #080d1d;
+  --secondary-dark: #1C084A;
   --primary-orange: #EE964B;
   --primary-navy: #084B83;
   --primary-cyan: #06BEE1;
   --white: #FFFFFF;
   --light-gray: #f8f9fa;
+  --soft-blue: #e3f2fd;
+  --card-bg: #fafbfc;
+  --shadow-light: rgba(10, 17, 40, 0.08);
+  --shadow-medium: rgba(10, 17, 40, 0.12);
+  --shadow-cyan: rgba(6, 190, 225, 0.25);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 .home-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a1128, #080d1d);
-  color: var(--white);
+  background: linear-gradient(135deg, var(--light-gray) 0%, var(--soft-blue) 100%);
+  color: var(--primary-dark);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .home-header {
   text-align: center;
-  padding: 4rem 1rem 3rem;
+  padding: 2.5rem 1rem 2rem;
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+  color: var(--white);
   position: relative;
+  overflow: hidden;
+}
+
+.home-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(6, 190, 225, 0.1) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .home-header h1 {
-  font-size: 3.5rem;
+  font-size: 2.8rem;
   margin-bottom: 0.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-orange) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--white);
+  position: relative;
+  z-index: 1;
 }
 
 .tagline {
   font-size: 1.2rem;
   color: var(--primary-cyan);
-  opacity: 0.9;
+  opacity: 0.95;
+  position: relative;
+  z-index: 1;
 }
 
 .home-main {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 3rem 1rem;
 }
 
 .hero-section {
   text-align: center;
-  margin-bottom: 4rem;
-  padding: 3rem 1rem;
+  margin-bottom: 5rem;
+  padding: 4rem 2rem;
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px var(--shadow-light);
+  border: 1px solid rgba(6, 190, 225, 0.1);
+  position: relative;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-cyan), var(--primary-orange));
+  border-radius: 20px 20px 0 0;
 }
 
 .hero-section h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: var(--white);
+  font-size: 2.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-dark);
+  font-weight: 600;
+  line-height: 1.2;
 }
 
 .hero-section p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  color: var(--primary-cyan);
-  opacity: 0.85;
+  font-size: 1.3rem;
+  margin-bottom: 2.5rem;
+  color: var(--primary-navy);
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
 }
 
 .cta-button {
-  background: var(--primary-orange);
+  background: linear-gradient(135deg, var(--primary-orange), #f4a261);
   color: var(--white);
   border: none;
-  padding: 1rem 2.5rem;
+  padding: 1.2rem 3rem;
   font-size: 1.1rem;
   font-weight: 600;
-  border-radius: 50px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(238, 150, 75, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px rgba(238, 150, 75, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.cta-button:hover::before {
+  left: 100%;
 }
 
 .cta-button:hover {
-  background: #ff9d4f;
+  background: linear-gradient(135deg, var(--primary-navy), #0d4f8c);
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(238, 150, 75, 0.4);
+  box-shadow: 0 10px 30px rgba(8, 75, 131, 0.4);
 }
 
 .cta-button:active {
@@ -87,18 +151,18 @@
 
 .features-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
   padding: 2rem 0;
 }
 
 .feature-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  padding: 2.5rem;
-  border-radius: 20px;
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 16px;
   border: 1px solid rgba(6, 190, 225, 0.15);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px var(--shadow-light);
   position: relative;
   overflow: hidden;
 }
@@ -108,55 +172,75 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 4px;
-  height: 100%;
-  background: linear-gradient(180deg, var(--primary-cyan) 0%, var(--primary-orange) 100%);
-  opacity: 0;
-  transition: opacity 0.5s ease;
+  right: 0;
+  height: 3px;
+  background: var(--primary-cyan);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover::before {
+  transform: scaleX(1);
 }
 
 .feature-card:hover {
   transform: translateY(-8px);
-  background: rgba(255, 255, 255, 0.08);
   border-color: var(--primary-cyan);
-  box-shadow: 0 15px 40px rgba(6, 190, 225, 0.2);
-}
-
-.feature-card:hover::before {
-  opacity: 1;
+  box-shadow: 0 12px 40px var(--shadow-cyan);
+  background: var(--card-bg);
 }
 
 .feature-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
   color: var(--primary-orange);
-  position: relative;
-  z-index: 1;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .feature-card p {
-  color: var(--white);
-  opacity: 0.9;
+  color: var(--primary-navy);
   line-height: 1.6;
-  position: relative;
-  z-index: 1;
+  font-size: 0.95rem;
 }
 
-/* First draft at Responsive Design */
+@media (max-width: 1200px) {
+  .features-section {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .home-header {
+    padding: 2rem 1rem 1.5rem;
+  }
+  
   .home-header h1 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+  }
+
+  .hero-section {
+    padding: 3rem 1.5rem;
+    margin-bottom: 3rem;
   }
 
   .hero-section h2 {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 
   .hero-section p {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 
   .features-section {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .feature-card {
+    padding: 1.8rem;
   }
 }

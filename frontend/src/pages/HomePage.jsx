@@ -14,7 +14,6 @@ function HomePage() {
           <h1>InsightXR</h1>
           <p className="tagline">AI-Powered Video Analysis Platform</p>
         </header>
-  
         <main className="home-main">
             // the hero needs to be improved, but debating animating
           <section className="hero-section">
