@@ -76,3 +76,8 @@ insightxr/
         └── services/
             └── api.js
 
+## Contributors:
+-Afonso 
+-Nauman Patel
+-Mahant Lacximikant
+
