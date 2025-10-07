@@ -8,7 +8,7 @@ function HomePage() {
   return (
     <div className="home-container">
       <header className="home-header">
-        <h1>InsightXR</h1>
+        <h1>Cognivue</h1>
         <p className="tagline">AI-Powered Video Analysis Platform</p>
       </header>
       <main className="home-main">

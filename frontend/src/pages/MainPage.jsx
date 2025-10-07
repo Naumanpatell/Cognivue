@@ -10,7 +10,7 @@ function MainPage() {
     return (
       <div className="home-container">
         <header className="home-header">
-          <h1>InsightXR</h1>
+          <h1>Cognivue</h1>
           <p className="tagline">THIS IS JUST A COPY OF THE LANDING PAGE, IM GOING TO CHANGE IT SOON</p>
         </header>
       </div>

@@ -46,7 +46,7 @@ export default function Auth() {
   return (
     <div className="auth-page">
       <div className="auth-box">
-        <h1>InsightXR</h1>
+        <h1>Cognivue</h1>
         
         <div className="tabs">
           <button 
