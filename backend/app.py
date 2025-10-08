@@ -1,6 +1,7 @@
 import os
 from flask import Flask, send_from_directory
 from flask_cors import CORS
+from utils.supabase_clients import supabase
 
 app = Flask(
     __name__,
@@ -16,6 +17,13 @@ def serve(path):
     if path and os.path.exists(file_path):
         return send_from_directory(app.static_folder, path)
     return send_from_directory(app.static_folder, 'index.html')
+
+# added supabase and just testing the table
+#made the videos table and currently showing empty data row so its connected
+@app.route("/test_supabase")
+def test_supabase():
+    response = supabase.table("videos_test").select("*").execute()
+    return {"data": response.data}
 
 
 if __name__ == '__main__':
