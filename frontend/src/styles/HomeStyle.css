@@ -17,18 +17,18 @@
 
 /* Dark Theme Variables */
 .dark-theme {
-  --primary-dark: #f8f9fa;
-  --secondary-dark: #e9ecef;
-  --primary-orange: #ff9500;
-  --primary-navy: #6c7ce7;
-  --primary-cyan: #00d4ff;
+  --primary-dark: #ffffff;
+  --secondary-dark: #e0e0e0;
+  --primary-orange: #EE964B;
+  --primary-navy: #8b5cf6;
+  --primary-cyan: #06BEE1;
   --white: #1a1a2e;
   --light-gray: #16213e;
-  --soft-blue: #0f1419;
-  --card-bg: #1e1e3f;
+  --soft-blue: #0f0f23;
+  --card-bg: #2d1b69;
   --shadow-light: rgba(0, 0, 0, 0.3);
   --shadow-medium: rgba(0, 0, 0, 0.4);
-  --shadow-cyan: rgba(0, 212, 255, 0.3);
+  --shadow-cyan: rgba(139, 92, 246, 0.3);
 }
 
 * {
@@ -53,6 +53,11 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
+}
+
+/* Dark theme header - purple gradient */
+.dark-theme .home-header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d1b69 50%, #16213e 100%);
 }
 
 .header-content {
@@ -85,6 +90,13 @@
   color: var(--white);
   position: relative;
   z-index: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Dark theme header text - extra contrast */
+.dark-theme .home-header h1 {
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
 .tagline {
@@ -93,6 +105,14 @@
   opacity: 0.95;
   position: relative;
   z-index: 1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Dark theme tagline - better contrast */
+.dark-theme .tagline {
+  color: #06BEE1;
+  opacity: 1;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 .home-main {

@@ -17,6 +17,11 @@
     gap: 1rem;
   }
 
+  /* Dark theme header - purple gradient */
+  .dark-theme .terms-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d1b69 50%, #16213e 100%);
+  }
+
   .terms-header .header-content {
     flex: 1;
     text-align: center;
@@ -33,12 +38,27 @@
     font-size: 3rem;
     margin-bottom: 0.5rem;
     font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Dark theme header text - extra contrast */
+  .dark-theme .terms-header h1 {
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
   }
   
   .last-updated {
     font-size: 1rem;
     color: var(--primary-cyan);
     opacity: 0.9;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Dark theme last updated text */
+  .dark-theme .last-updated {
+    color: #06BEE1;
+    opacity: 1;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
   }
   
   .terms-content {

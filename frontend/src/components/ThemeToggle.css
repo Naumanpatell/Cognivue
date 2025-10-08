@@ -33,8 +33,8 @@
 }
 
 .toggle-track.dark {
-  background: linear-gradient(135deg, #0a1128 0%, #1C084A 100%);
-  border-color: rgba(77, 208, 225, 0.3);
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d1b69 100%);
+  border-color: rgba(139, 92, 246, 0.4);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -59,8 +59,8 @@
 
 .toggle-thumb.dark {
   left: 31px;
-  background: linear-gradient(135deg, #4dd0e1, #06BEE1);
-  box-shadow: 0 2px 6px rgba(77, 208, 225, 0.4);
+  background: linear-gradient(135deg, #8b5cf6, #EE964B);
+  box-shadow: 0 2px 6px rgba(139, 92, 246, 0.4);
 }
 
 .toggle-icon {
@@ -80,7 +80,7 @@
 }
 
 .theme-toggle:hover .toggle-track.dark {
-  border-color: rgba(77, 208, 225, 0.5);
+  border-color: rgba(139, 92, 246, 0.6);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
