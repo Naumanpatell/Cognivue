@@ -22,7 +22,7 @@ def serve(path):
 #made the videos table and currently showing empty data row so its connected
 @app.route("/test_supabase")
 def test_supabase():
-    response = supabase.table("videos").select("*").execute()
+    response = supabase.table("videos_test").select("*").execute()
     return {"data": response.data}
 
 
