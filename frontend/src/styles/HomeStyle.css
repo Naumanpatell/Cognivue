@@ -17,18 +17,18 @@
 
 /* Dark Theme Variables */
 .dark-theme {
-  --primary-dark: #e3f2fd;
-  --secondary-dark: #b3e5fc;
-  --primary-orange: #ffb74d;
-  --primary-navy: #64b5f6;
-  --primary-cyan: #4dd0e1;
-  --white: #0a1128;
-  --light-gray: #1a1a2e;
-  --soft-blue: #16213e;
-  --card-bg: #1C084A;
-  --shadow-light: rgba(227, 242, 253, 0.08);
-  --shadow-medium: rgba(227, 242, 253, 0.12);
-  --shadow-cyan: rgba(77, 208, 225, 0.25);
+  --primary-dark: #f8f9fa;
+  --secondary-dark: #e9ecef;
+  --primary-orange: #ff9500;
+  --primary-navy: #6c7ce7;
+  --primary-cyan: #00d4ff;
+  --white: #1a1a2e;
+  --light-gray: #16213e;
+  --soft-blue: #0f1419;
+  --card-bg: #1e1e3f;
+  --shadow-light: rgba(0, 0, 0, 0.3);
+  --shadow-medium: rgba(0, 0, 0, 0.4);
+  --shadow-cyan: rgba(0, 212, 255, 0.3);
 }
 
 * {

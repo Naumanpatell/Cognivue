@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import Avatar from './Avatar'
+import ThemeToggle from './ThemeToggle'
 import '../styles/OnboardingStyle.css'
 
 export default function Account({ session }) {
@@ -97,6 +98,9 @@ export default function Account({ session }) {
 
   return (
     <div className="onboarding-container">
+      <div className="account-header">
+        <ThemeToggle />
+      </div>
       <form onSubmit={updateProfile} className="form-widget">
         <div className="avatar-section">
           <Avatar

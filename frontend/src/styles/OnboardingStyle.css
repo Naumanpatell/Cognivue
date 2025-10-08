@@ -4,10 +4,20 @@
   min-height: 100vh;
   background: linear-gradient(135deg, var(--light-gray) 0%, var(--soft-blue) 100%);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   padding: 1rem;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.account-header {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10;
 }
 
 .form-widget {
@@ -438,6 +448,11 @@
 }
 
 @media (max-width: 480px) {
+  .account-header {
+    top: 1rem;
+    right: 1rem;
+  }
+  
   .form-widget {
     padding: 2rem 1.5rem;
   }

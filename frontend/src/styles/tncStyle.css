@@ -3,13 +3,30 @@
     min-height: 100vh;
     background: linear-gradient(135deg, var(--light-gray) 0%, var(--soft-blue) 100%);
     color: var(--primary-dark);
+    transition: background 0.3s ease, color 0.3s ease;
   }
   
   .terms-header {
-    text-align: center;
     padding: 4rem 1rem 2rem;
     background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
     color: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .terms-header .header-content {
+    flex: 1;
+    text-align: center;
+    min-width: 300px;
+  }
+
+  .terms-header .header-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .terms-header h1 {
@@ -35,8 +52,9 @@
     padding: 2.5rem;
     margin-bottom: 2rem;
     border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(10, 17, 40, 0.08);
+    box-shadow: 0 2px 12px var(--shadow-light);
     border-left: 4px solid var(--primary-orange);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
   }
   
   .terms-section h2 {
@@ -112,6 +130,16 @@
   
   /* Responsive Design */
   @media (max-width: 768px) {
+    .terms-header {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .terms-header .header-content {
+      min-width: auto;
+      margin-bottom: 1rem;
+    }
+    
     .terms-header h1 {
       font-size: 2rem;
     }

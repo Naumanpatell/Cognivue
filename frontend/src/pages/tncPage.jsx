@@ -1,12 +1,18 @@
 import React from 'react';
+import ThemeToggle from '../components/ThemeToggle';
 import '../styles/tncStyle.css';
 
 function TermsAndConditions() {
   return (
     <div className="terms-container">
       <header className="terms-header">
-        <h1>Terms and Conditions</h1>
-        <p className="last-updated">Last Updated: October 8, 2025</p>
+        <div className="header-content">
+          <h1>Terms and Conditions</h1>
+          <p className="last-updated">Last Updated: October 8, 2025</p>
+        </div>
+        <div className="header-controls">
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="terms-content">
