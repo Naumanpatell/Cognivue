@@ -1,11 +1,6 @@
 import React from "react";
 import '../styles/HomeStyle.css'
 
-
-// This is where most of the features are going to be, still working on it
-
-
-
 function MainPage() {
     return (
       <div className="home-container">
