@@ -1,6 +1,7 @@
 import os
 from flask import Flask, send_from_directory, jsonify
 from flask_cors import CORS
+from utils.supabase_clients import supabase
 
 app = Flask(
     __name__,
