@@ -11,7 +11,7 @@ export default function Account({ session }) {
   const [firstname, setFirstname] = useState(null)
   const [lastname, setLastname] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
-
+  const [tnc, setTnc] = useState(false)
   useEffect(() => {
     let ignore = false
     async function getProfile() {
@@ -112,9 +112,23 @@ export default function Account({ session }) {
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
+        <div className="tnc-container">
+          <label className="tnc-label" htmlFor="tnc">
+            <input 
+              id="tnc" 
+              type="checkbox" 
+              checked={tnc} 
+              onChange={(e) => setTnc(e.target.checked)} 
+              className="tnc-checkbox"
+            />
+            <span className="tnc-text">
+              By clicking Proceed, you agree to our <a href="/tnc" className="tnc-link">Terms and Conditions</a>
+            </span>
+          </label>
+        </div>
 
         <div>
-          <button className="button block primary" type="submit" disabled={loading}>
+          <button className="button block primary" type="submit" disabled={loading || !tnc}>
             {loading ? 'Loading ...' : 'Proceed'}
           </button>
         </div>

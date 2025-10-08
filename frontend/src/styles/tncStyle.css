@@ -1,0 +1,134 @@
+/* Terms and Conditions Styling */
+.terms-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--light-gray) 0%, var(--soft-blue) 100%);
+    color: var(--primary-dark);
+  }
+  
+  .terms-header {
+    text-align: center;
+    padding: 4rem 1rem 2rem;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+    color: var(--white);
+  }
+  
+  .terms-header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+  
+  .last-updated {
+    font-size: 1rem;
+    color: var(--primary-cyan);
+    opacity: 0.9;
+  }
+  
+  .terms-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+  }
+  
+  .terms-section {
+    background: var(--white);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(10, 17, 40, 0.08);
+    border-left: 4px solid var(--primary-orange);
+  }
+  
+  .terms-section h2 {
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  
+  .terms-section h3 {
+    font-size: 1.3rem;
+    color: var(--primary-navy);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+  
+  .terms-section p {
+    color: var(--primary-navy);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  
+  .terms-section ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+  
+  .terms-section li {
+    color: var(--primary-navy);
+    line-height: 1.8;
+    margin-bottom: 0.5rem;
+  }
+  
+  .terms-section li strong {
+    color: var(--primary-dark);
+    font-weight: 600;
+  }
+  
+  .contact-info {
+    background: var(--light-gray);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border-left: 3px solid var(--primary-cyan);
+  }
+  
+  .contact-info p {
+    margin-bottom: 0.5rem;
+    color: var(--primary-dark);
+  }
+  
+  .contact-info strong {
+    color: var(--primary-cyan);
+  }
+  
+  .acknowledgment {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(10, 17, 40, 0.08);
+    border: 2px solid var(--primary-orange);
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .acknowledgment p {
+    color: var(--primary-dark);
+    font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .terms-header h1 {
+      font-size: 2rem;
+    }
+  
+    .terms-section {
+      padding: 1.5rem;
+    }
+  
+    .terms-section h2 {
+      font-size: 1.5rem;
+    }
+  
+    .terms-section h3 {
+      font-size: 1.2rem;
+    }
+  
+    .acknowledgment {
+      padding: 1.5rem;
+    }
+  }
