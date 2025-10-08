@@ -2,10 +2,19 @@
   min-height: 100vh;
   background: linear-gradient(135deg, var(--light-gray) 0%, var(--soft-blue) 100%);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   padding: 1rem;
+  position: relative;
+}
+
+.auth-header {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10;
 }
 
 .auth-box {
@@ -173,6 +182,11 @@ form button:active {
 }
 
 @media (max-width: 768px) {
+  .auth-header {
+    top: 1rem;
+    right: 1rem;
+  }
+  
   .auth-box {
     padding: 2.5rem 2rem;
     margin: 1rem;

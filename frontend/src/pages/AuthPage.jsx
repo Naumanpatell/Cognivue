@@ -13,6 +13,7 @@ import { supabase } from '../lib/supabase'
 import '../styles/AuthStyle.css'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import ThemeToggle from '../components/ThemeToggle'
 
 export default function Auth() {
   const [loading, setLoading] = useState(false)
@@ -59,6 +60,9 @@ export default function Auth() {
 
   return (
     <div className="auth-page">
+      <div className="auth-header">
+        <ThemeToggle />
+      </div>
       <motion.div 
         className="auth-box"
         initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}

@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import ThemeToggle from '../components/ThemeToggle';
 import '../styles/HomeStyle.css'
 
 function HomePage() {
@@ -8,8 +9,13 @@ function HomePage() {
   return (
     <div className="home-container">
       <header className="home-header">
-        <h1>Cognivue</h1>
-        <p className="tagline">AI-Powered Video Analysis Platform</p>
+        <div className="header-content">
+          <h1>Cognivue</h1>
+          <p className="tagline">AI-Powered Video Analysis Platform</p>
+        </div>
+        <div className="header-controls">
+          <ThemeToggle />
+        </div>
       </header>
       <main className="home-main">
         <section className="hero-section">

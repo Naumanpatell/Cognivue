@@ -1,0 +1,120 @@
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.toggle-track {
+  width: 60px;
+  height: 30px;
+  border-radius: 15px;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+}
+
+.toggle-track.light {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 100%);
+  border-color: rgba(6, 190, 225, 0.2);
+  box-shadow: 0 2px 8px rgba(10, 17, 40, 0.1);
+}
+
+.toggle-track.dark {
+  background: linear-gradient(135deg, #0a1128 0%, #1C084A 100%);
+  border-color: rgba(77, 208, 225, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  position: absolute;
+  top: 1px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.toggle-thumb.light {
+  left: 1px;
+  background: linear-gradient(135deg, #EE964B, #f4a261);
+  box-shadow: 0 2px 6px rgba(238, 150, 75, 0.4);
+}
+
+.toggle-thumb.dark {
+  left: 31px;
+  background: linear-gradient(135deg, #4dd0e1, #06BEE1);
+  box-shadow: 0 2px 6px rgba(77, 208, 225, 0.4);
+}
+
+.toggle-icon {
+  font-size: 10px;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+/* Hover effects */
+.theme-toggle:hover .toggle-track {
+  transform: scale(1.05);
+}
+
+.theme-toggle:hover .toggle-track.light {
+  border-color: rgba(6, 190, 225, 0.4);
+  box-shadow: 0 4px 12px rgba(10, 17, 40, 0.15);
+}
+
+.theme-toggle:hover .toggle-track.dark {
+  border-color: rgba(77, 208, 225, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.theme-toggle:hover .toggle-thumb {
+  transform: scale(1.1);
+}
+
+/* Focus styles for accessibility, maybe good??????*/
+.theme-toggle:focus {
+  outline: none;
+}
+
+.theme-toggle:focus .toggle-track {
+  box-shadow: 0 0 0 3px rgba(6, 190, 225, 0.3);
+}
+
+/* Mobile responsiveness attempt lol*/
+@media (max-width: 768px) {
+  .toggle-track {
+    width: 50px;
+    height: 25px;
+  }
+  
+  .toggle-thumb {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
+  
+  .toggle-thumb.dark {
+    left: 26px;
+  }
+  
+  .toggle-icon {
+    font-size: 8px;
+  }
+}
