@@ -58,7 +58,23 @@ export default function Account({ session }) {
       return
     }
     setLoading(false)
-    navigate('/main')
+
+
+    // trying a fix for the updating error
+    const updates ={
+      id: user.id,
+      username,
+      full_name: `${firstname} ${lastname}`,
+      avatar_url: avatar_url,
+      updated_at: new Date(),
+    }
+    const { error } = await supabase.from('profiles').upsert(updates)
+
+    if (error) {
+      alert(error.message)
+    } else {
+      navigate('/main')
+    }
   }
 
   async function updateProfilePicture(event, avatarUrl) {
