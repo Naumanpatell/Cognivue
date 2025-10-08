@@ -1,7 +1,7 @@
 # Cognivue — Multimodal Video Intelligence System
 
 ## Overview
-InsightXR is a full-stack AI-powered web platform that converts videos into structured insights using speech recognition, computer vision, and natural language processing (NLP).  
+Congnivue is a full-stack AI-powered web platform that converts videos into structured insights using speech recognition, computer vision, and natural language processing (NLP).  
 The system allows users to upload videos, processes them through multiple AI pipelines, and displays results through an interactive dashboard.  
 It demonstrates skills in AI model integration, full-stack development, and scalable web architecture.
 
@@ -33,7 +33,7 @@ It demonstrates skills in AI model integration, full-stack development, and scal
 ## 📂 Project Structure
 
 ```bash
-insightxr/
+cognivue/
 │
 ├── backend/                             # Flask backend (AI + API)
 │   ├── app.py
