@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDropzone } from 'react-dropzone';
 import { supabase } from '../lib/supabase';
 import ThemeToggle from '../components/ThemeToggle';
 import '../styles/MainPageStyle.css'
 
 function MainPage() {
+  const navigate = useNavigate()
+
   const [uploading, setUploading] = useState(false)
   const [uploadStatus, setUploadStatus] = useState('')
   const [uploadedFileUrl, setUploadedFileUrl] = useState('')
@@ -31,6 +34,7 @@ function MainPage() {
     }
 
     // Check if user is authenticated
+    // might get rid of this for testing/ not being too difficult to new users
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) {
       console.error('User not authenticated');
@@ -50,7 +54,7 @@ function MainPage() {
       }
 
       const {data: {publicUrl}} = supabase.storage.from('user_videos').getPublicUrl(fileName);
-      console.log('File uploaded successfully:', publicUrl);
+      //console.log('File uploaded successfully:', publicUrl);
       return publicUrl;
     } catch (error) {
       console.error('Upload error:', error);
@@ -71,7 +75,7 @@ function MainPage() {
       if (url) {
         setUploadStatus('File uploaded successfully!')
         setUploadedFileUrl(url)
-        console.log('Uploaded! URL:', url)
+        //console.log('Uploaded! URL:', url)
       } else {
         setUploadStatus('Upload failed')
       }
@@ -88,9 +92,11 @@ function MainPage() {
     return (
       <div className="main-container">
         <header className="main-header">
-          <div className="header-content">
-            <h1>Cognivue</h1>
-          </div>
+            <div className="header-content">
+              <div className="header-title" onClick={() => navigate('/')}>
+                Cognivue
+              </div>
+            </div>
           <div className="header-controls">
             <ThemeToggle />
           </div>
@@ -118,6 +124,7 @@ function MainPage() {
                 <p className={uploadedFileUrl ? 'success' : 'error'}>{uploadStatus}</p>
                 {uploadedFileUrl && (
                   <div>
+                    <p>I'm gonna get rid of this, its only for testing</p>
                     <p>File URL:</p>
                     <a href={uploadedFileUrl} target="_blank" rel="noopener noreferrer">
                       {uploadedFileUrl}
@@ -139,6 +146,7 @@ function MainPage() {
           {/* Results Section */}
           <section className="results-section">
             <h2>Results</h2>
+            <h3>We can discuss if we should have a button which leads to the analysis or if it'll show up here</h3>
             <div className="results-area">
               <p>Transcription and analysis results will appear here...</p>
             </div>

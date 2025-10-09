@@ -92,11 +92,39 @@
     z-index: 1;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   }
+  .header-title {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    color: var(--white);
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+
+  .header-title:hover {
+    color: var(--primary-orange);
+    transform: translateY(-2px);
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  }
   
   /* Dark theme header text - extra contrast */
   .dark-theme .main-header h1 {
     color: #ffffff;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  }
+
+  .dark-theme .header-title {
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  }
+
+  .dark-theme .header-title:hover {
+    color: var(--primary-orange);
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
   }
   
   .tagline {
@@ -328,6 +356,9 @@
     }
     
     .main-header h1 {
+      font-size: 2.2rem;
+    }
+    .header-title {
       font-size: 2.2rem;
     }
 
