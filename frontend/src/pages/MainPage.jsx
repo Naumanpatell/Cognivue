@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDropzone } from 'react-dropzone';
 import { supabase } from '../lib/supabase';
 import ThemeToggle from '../components/ThemeToggle';
 import '../styles/MainPageStyle.css'
@@ -7,6 +8,21 @@ function MainPage() {
   const [uploading, setUploading] = useState(false)
   const [uploadStatus, setUploadStatus] = useState('')
   const [uploadedFileUrl, setUploadedFileUrl] = useState('')
+
+  // Dropzone configuration
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: {
+      'video/*': [],
+      'audio/*': []
+    },
+    onDrop: async (acceptedFiles) => {
+      if (acceptedFiles.length > 0) {
+        await handleFileUpload(acceptedFiles[0])
+      }
+    },
+    multiple: false,
+    disabled: uploading
+  })
 
   const handleUpload = async (file) => {
     if (!file) {
@@ -43,8 +59,7 @@ function MainPage() {
     }
   }
 
-  const handleFileSelect = async (e) => {
-    const file = e.target.files[0]
+  const handleFileUpload = async (file) => {
     if (!file) return
     
     setUploading(true)
@@ -85,16 +100,19 @@ function MainPage() {
           {/* Upload Section */}
           <section className="upload-section">
             <h2>Upload Audio/Video</h2>
-            <div className="upload-area">
-              <p>Drag and drop files here or click to browse</p>
+            <div 
+              {...getRootProps()} 
+              className={`upload-area ${isDragActive ? 'drag-active' : ''} ${uploading ? 'uploading' : ''}`}
+            >
+              <input {...getInputProps()} />
+              {uploading ? (
+                <p>Uploading...</p>
+              ) : isDragActive ? (
+                <p>Drop your file here!</p>
+              ) : (
+                <p>Drag and drop files here or click to browse</p>
+              )}
             </div>
-            <div className="upload-form">
-            <input 
-              type="file" 
-              accept="video/*,audio/*"
-              onChange={handleFileSelect}
-              disabled={uploading}
-            />
             {uploadStatus && (
               <div className="upload-status">
                 <p className={uploadedFileUrl ? 'success' : 'error'}>{uploadStatus}</p>
@@ -108,7 +126,6 @@ function MainPage() {
                 )}
               </div>
             )}
-            </div>
           </section>
           
           {/* Processing Section */}

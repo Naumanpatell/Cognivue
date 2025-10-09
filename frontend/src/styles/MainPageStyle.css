@@ -158,6 +158,18 @@
     border-color: var(--primary-orange);
     background: rgba(238, 150, 75, 0.1);
   }
+
+  .upload-area.drag-active {
+    border-color: var(--primary-orange);
+    background: rgba(238, 150, 75, 0.2);
+    border-style: solid;
+  }
+
+  .upload-area.uploading {
+    border-color: var(--primary-cyan);
+    background: rgba(6, 190, 225, 0.1);
+    pointer-events: none;
+  }
   
   .hero-section {
     text-align: center;
