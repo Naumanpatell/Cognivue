@@ -61,6 +61,9 @@ export default function Auth() {
   return (
     <div className="auth-page">
       <div className="auth-header">
+        <button className="back-button" onClick={() => navigate('/')}>
+          Back
+        </button>
         <ThemeToggle />
       </div>
       <motion.div 
