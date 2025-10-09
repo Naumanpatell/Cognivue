@@ -5,19 +5,23 @@ from dotenv import load_dotenv
 load_dotenv()
 
 HF_TOKEN = os.getenv("HF_TOKEN")
+MODEL_ID = "openai/whisper-large-v3"
 
-client = InferenceClient(HF_TOKEN)
+# Initialize client with explicit model and token
+client = InferenceClient(model=MODEL_ID, token=HF_TOKEN)
 
-ModelId = "openai/whisper-large-v3"
-def transcribe_audio(audio_path):
+def transcribe_audio(file_like):
     try:
-        with open(audio_path, "rb") as audio:
-            transcription = client.automatic_speech_recognition(
-                audio=audio,
-                model=ModelId,
-                language="english",
-            )
-            return transcription["text"]
+        if hasattr(file_like, "seek"):
+            file_like.seek(0)
+        transcription = client.automatic_speech_recognition(
+            audio=file_like,
+            model=MODEL_ID,
+            language="english",
+        )
+        if isinstance(transcription, dict):
+            return transcription.get("text")
+        return str(transcription)
     except Exception as e:
         print(f"Error transcribing audio: {e}")
         return None
