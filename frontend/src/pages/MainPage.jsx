@@ -8,6 +8,12 @@ import '../styles/MainPageStyle.css'
 function MainPage() {
   const navigate = useNavigate()
 
+  const [processing, setProcessing] = useState(false)
+const [processingStatus, setProcessingStatus] = useState('')
+const [transcriptionResult, setTranscriptionResult] = useState('')
+const [uploadedFileName, setUploadedFileName] = useState('')
+
+
   const [uploading, setUploading] = useState(false)
   const [uploadStatus, setUploadStatus] = useState('')
   const [uploadedFileUrl, setUploadedFileUrl] = useState('')
@@ -55,7 +61,7 @@ function MainPage() {
 
       const {data: {publicUrl}} = supabase.storage.from('user_videos').getPublicUrl(fileName);
       //console.log('File uploaded successfully:', publicUrl);
-      return publicUrl;
+      return { url: publicUrl, fileName: fileName };
     } catch (error) {
       console.error('Upload error:', error);
       alert(`Upload failed: ${error.message}`);
@@ -69,13 +75,13 @@ function MainPage() {
     setUploading(true)
     setUploadStatus('Uploading file...')
     setUploadedFileUrl('')
-    
+
     try {
-      const url = await handleUpload(file)
-      if (url) {
+      const result = await handleUpload(file)
+      if (result) {
         setUploadStatus('File uploaded successfully!')
-        setUploadedFileUrl(url)
-        //console.log('Uploaded! URL:', url)
+        setUploadedFileUrl(result.url)
+        setUploadedFileName(result.fileName) // Store the filename for processing
       } else {
         setUploadStatus('Upload failed')
       }
@@ -86,6 +92,44 @@ function MainPage() {
       setUploading(false)
     }
   }
+  const handleProcessFile = async () => {
+    if (!uploadedFileName) {
+      alert('No file uploaded to process')
+      return
+    }
+  
+    setProcessing(true)
+    setProcessingStatus('Processing audio file...')
+    setTranscriptionResult('')
+  
+    try {
+      const response = await fetch('http://localhost:5001/process_supabase_file', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          bucketName: 'user_videos',
+          fileName: uploadedFileName
+        })
+      })
+  
+      const data = await response.json()
+      
+      if (response.ok) {
+        setProcessingStatus('Processing completed!')
+        setTranscriptionResult(data.transcription)
+      } else {
+        setProcessingStatus(`Processing failed: ${data.error}`)
+      }
+    } catch (error) {
+      console.error('Processing error:', error)
+      setProcessingStatus(`Processing failed: ${error.message}`)
+    } finally {
+      setProcessing(false)
+    }
+  }
+  
   
 
 
@@ -134,23 +178,61 @@ function MainPage() {
               </div>
             )}
           </section>
-          
           {/* Processing Section */}
-          <section className="processing-section">
-            <h2>Processing</h2>
-            <div className="processing-area">
-              <p>Processing will appear here...</p>
-            </div>
-          </section>
+<section className="processing-section">
+  <h2>Processing</h2>
+  <div className="processing-area">
+    {uploadedFileUrl ? (
+      <div>
+        <p>File ready for processing!</p>
+        <button 
+          className="cta-button"
+          onClick={handleProcessFile}
+          disabled={processing}
+          style={{ marginTop: '1rem' }}
+        >
+          {processing ? 'Processing...' : 'Process Audio'}
+        </button>
+        {processingStatus && (
+          <div className="processing-status" style={{ marginTop: '1rem' }}>
+            <p className={transcriptionResult ? 'success' : 'error'}>
+              {processingStatus}
+            </p>
+          </div>
+        )}
+      </div>
+    ) : (
+      <p>Upload a file first to begin processing</p>
+    )}
+  </div>
+</section>
 
-          {/* Results Section */}
-          <section className="results-section">
-            <h2>Results</h2>
-            <h3>We can discuss if we should have a button which leads to the analysis or if it'll show up here</h3>
-            <div className="results-area">
-              <p>Transcription and analysis results will appear here...</p>
-            </div>
-          </section>
+{/* Results Section */}
+<section className="results-section">
+  <h2>Results</h2>
+  <div className="results-area">
+    {transcriptionResult ? (
+      <div>
+        <h3>Transcription:</h3>
+        <div 
+          style={{
+            background: 'var(--light-gray)',
+            padding: '1rem',
+            borderRadius: '8px',
+            marginTop: '1rem',
+            textAlign: 'left',
+            maxHeight: '400px',
+            overflowY: 'auto'
+          }}
+        >
+          {transcriptionResult}
+        </div>
+      </div>
+    ) : (
+      <p>Transcription results will appear here after processing...</p>
+    )}
+  </div>
+</section>
         </main>
       </div>
     );

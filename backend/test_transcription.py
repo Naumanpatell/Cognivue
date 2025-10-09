@@ -7,7 +7,7 @@ def transcribe_from_supabase_bytes(bucket_name: str, file_path: str):
         # Download the file from Supabase storage as bytes
         response = supabase.storage.from_(bucket_name).download(file_path)
         
-        # Pass bytes directly to your existing transcribe_audio function
+        # Pass bytes directly to existing transcribe_audio function
         result = transcribe_audio(response)
         
         return result
@@ -16,8 +16,8 @@ def transcribe_from_supabase_bytes(bucket_name: str, file_path: str):
         return None
 
 # Test with Supabase storage
-bucket_name = "user_videos"  # Your bucket name
-filename = "1760035051009-LearningEnglishConversations-20250923-TheEnglishWeSpeakNoLegToStandOn.mp3"  # Just the filename (no path needed)
+bucket_name = "user_videos"  # bucket name
+filename = "LOVER$ ROCKY.mp3"  # Just the filename
 
 print(f"Downloading audio from Supabase: {bucket_name}/{filename}")
 result = transcribe_from_supabase_bytes(bucket_name, filename)
