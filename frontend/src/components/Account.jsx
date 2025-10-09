@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import Avatar from './Avatar'
+import ThemeToggle from './ThemeToggle'
 import '../styles/OnboardingStyle.css'
 
 export default function Account({ session }) {
@@ -11,7 +12,7 @@ export default function Account({ session }) {
   const [firstname, setFirstname] = useState(null)
   const [lastname, setLastname] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
-
+  const [tnc, setTnc] = useState(false)
   useEffect(() => {
     let ignore = false
     async function getProfile() {
@@ -49,6 +50,36 @@ export default function Account({ session }) {
     setLoading(true)
     const { user } = session
 
+    // going to check if username is unique
+    // this helps stop a confusing error message from happening
+    const {data: existingUsername} = await supabase.from('profiles').select('username').eq('username', username).single()
+    if (existingUsername) {
+      alert("The username is already taken, please try another one")
+      setLoading(false)
+      return
+    }
+    setLoading(false)
+
+
+    // trying a fix for the updating error
+    const updates ={
+      id: user.id,
+      username,
+      full_name: `${firstname} ${lastname}`,
+      avatar_url: avatar_url,
+      updated_at: new Date(),
+    }
+    const { error } = await supabase.from('profiles').upsert(updates)
+
+    if (error) {
+      alert(error.message)
+    } else {
+      navigate('/main')
+    }
+  }
+
+  async function updateProfilePicture(event, avatarUrl) {
+    const { user } = session
     const updates = {
       id: user.id,
       username,
@@ -62,21 +93,23 @@ export default function Account({ session }) {
       alert(error.message)
     } else {
       setAvatarUrl(avatarUrl)
-      navigate('/main')
     }
-    setLoading(false)
   }
 
   return (
     <div className="onboarding-container">
+      <div className="account-header">
+        <ThemeToggle />
+      </div>
       <form onSubmit={updateProfile} className="form-widget">
+        <div className="avatar-section">
           <Avatar
         url={avatar_url}
-        size={150}
+        size={350}
         onUpload={(event, url) => {
-          updateProfile(event, url)
+          updateProfilePicture(event, url)
         }}
-      />
+      /></div>
         <div>
           <label htmlFor="email">Email</label>
           <input id="email" type="text" value={session.user.email} disabled />
@@ -99,10 +132,24 @@ export default function Account({ session }) {
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
+        <div className="tnc-container">
+          <label className="tnc-label" htmlFor="tnc">
+            <input 
+              id="tnc" 
+              type="checkbox" 
+              checked={tnc} 
+              onChange={(e) => setTnc(e.target.checked)} 
+              className="tnc-checkbox"
+            />
+            <span className="tnc-text">
+              By clicking Proceed, you agree to our <a href="/tnc" className="tnc-link">Terms and Conditions</a>
+            </span>
+          </label>
+        </div>
 
         <div>
-          <button className="button block primary" type="submit" disabled={loading}>
-            {loading ? 'Loading ...' : 'Update'}
+          <button className="button block primary" type="submit" disabled={loading || !tnc}>
+            {loading ? 'Loading ...' : 'Proceed'}
           </button>
         </div>
 

@@ -15,6 +15,22 @@
   --shadow-cyan: rgba(6, 190, 225, 0.25);
 }
 
+/* Dark Theme Variables */
+.dark-theme {
+  --primary-dark: #ffffff;
+  --secondary-dark: #e0e0e0;
+  --primary-orange: #EE964B;
+  --primary-navy: #8b5cf6;
+  --primary-cyan: #06BEE1;
+  --white: #1a1a2e;
+  --light-gray: #16213e;
+  --soft-blue: #0f0f23;
+  --card-bg: #2d1b69;
+  --shadow-light: rgba(0, 0, 0, 0.3);
+  --shadow-medium: rgba(0, 0, 0, 0.4);
+  --shadow-cyan: rgba(139, 92, 246, 0.3);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -27,12 +43,33 @@
 }
 
 .home-header {
-  text-align: center;
   padding: 2.5rem 1rem 2rem;
   background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
   color: var(--white);
   position: relative;
   overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Dark theme header - purple gradient */
+.dark-theme .home-header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d1b69 50%, #16213e 100%);
+}
+
+.header-content {
+  flex: 1;
+  text-align: center;
+  min-width: 300px;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .home-header::before {
@@ -53,6 +90,13 @@
   color: var(--white);
   position: relative;
   z-index: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Dark theme header text - extra contrast */
+.dark-theme .home-header h1 {
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
 .tagline {
@@ -61,6 +105,14 @@
   opacity: 0.95;
   position: relative;
   z-index: 1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Dark theme tagline - better contrast */
+.dark-theme .tagline {
+  color: #06BEE1;
+  opacity: 1;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 .home-main {
@@ -216,6 +268,13 @@
 @media (max-width: 768px) {
   .home-header {
     padding: 2rem 1rem 1.5rem;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .header-content {
+    min-width: auto;
+    margin-bottom: 1rem;
   }
   
   .home-header h1 {

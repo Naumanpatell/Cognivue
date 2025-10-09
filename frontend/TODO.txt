@@ -1,0 +1,12 @@
+NOW:
+- Find permenant color scheme
+- Draw rough draft of main page
+- Add JS animation
+
+
+
+
+BEFORE DEPLOYMENT:
+- Turn on leaked password protection
+- Make password min 8 chars, digits, letters symbols
+- Add stricter rate limiters
