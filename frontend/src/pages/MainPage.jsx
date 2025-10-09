@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDropzone } from 'react-dropzone';
 import { supabase } from '../lib/supabase';
-import ThemeToggle from '../components/ThemeToggle';
+import ProfileDropdown from '../components/ProfileDropdown';
 import '../styles/MainPageStyle.css'
 
 function MainPage() {
@@ -98,7 +98,7 @@ function MainPage() {
               </div>
             </div>
           <div className="header-controls">
-            <ThemeToggle />
+            <ProfileDropdown />
           </div>
         </header>
         
