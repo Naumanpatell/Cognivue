@@ -188,6 +188,10 @@
     min-width: 300px;
   }
 
+  .upload-content button {
+
+  }
+
   .processing-area,
   .results-area {
     min-height: 100px;

@@ -131,6 +131,33 @@ function MainPage() {
     }
   }
 
+  const renameFile = async () => {
+    if (!uploadedFileName) {
+      alert('No file uploaded to rename')
+      return
+    }
+
+    setRenaming(true)
+
+    const newFileName = prompt('Enter the new file name:')
+    if (newFileName) {
+      const newFileNameMp3 = newFileName + ".mp3"
+      const {data, error} = await supabase.storage.from('user_videos').update(newFileName, {
+        bucketName: 'user_videos',
+        fileName: newFileNameMp3
+      })
+      if (error) {
+        alert('Error renaming file: ' + error.message)
+      } else {
+        alert('File renamed successfully')
+        console.log("New name: " + newFileName)
+        setRenaming(false)
+      }
+    }
+  }
+  
+  
+
   
   
 
@@ -167,17 +194,19 @@ function MainPage() {
                 )}
               </div>
               {uploadStatus && (
-                <div className="upload-status">
+                <div className="upload-status" {...{onClick: (e) => e.stopPropagation()}}>
                   <p className={uploadedFileUrl ? 'success' : 'error'}>{uploadStatus}</p>
                   {uploadedFileUrl && (
                     <div>
-                      <p>I'm gonna get rid of this, its only for testing</p>
                       <p>File Name:</p>
                       <a href={uploadedFileUrl} target="_blank" rel="noopener noreferrer">
                         {uploadedFileName}
                       </a>
+                      
+                      
                     </div>
                   )}
+                  <button onClick={(e) => {e.stopPropagation(); renameFile()}} disabled={renaming}>{renaming ? 'Renaming...' : 'Rename'}</button>
                 </div> 
               )}
             </div>
