@@ -1,6 +1,7 @@
 from supabase import create_client, Client
 import os
 from dotenv import load_dotenv
+from typing import Optional
 
 # Load environment variables from .env
 load_dotenv()
@@ -9,7 +10,7 @@ load_dotenv()
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY")
 
-def get_supabase_client() -> Client | None:
+def get_supabase_client() -> Optional[Client]:
     """Return a Supabase client if configured; otherwise None."""
     if not SUPABASE_URL or not SUPABASE_ANON_KEY:
         return None
@@ -19,4 +20,4 @@ def get_supabase_client() -> Client | None:
         return None
 
 # Backwards-compatible export for existing imports
-supabase: Client | None = get_supabase_client()
+supabase: Optional[Client] = get_supabase_client()
