@@ -9,10 +9,11 @@ function MainPage() {
   const navigate = useNavigate()
 
   const [processing, setProcessing] = useState(false)
-const [processingStatus, setProcessingStatus] = useState('')
-const [transcriptionResult, setTranscriptionResult] = useState('')
-const [uploadedFileName, setUploadedFileName] = useState('')
+  const [processingStatus, setProcessingStatus] = useState('')
+  const [transcriptionResult, setTranscriptionResult] = useState('')
+  const [uploadedFileName, setUploadedFileName] = useState('')
 
+  const [renaming, setRenaming] = useState(false)
 
   const [uploading, setUploading] = useState(false)
   const [uploadStatus, setUploadStatus] = useState('')
@@ -129,6 +130,7 @@ const [uploadedFileName, setUploadedFileName] = useState('')
       setProcessing(false)
     }
   }
+
   
   
 
@@ -150,33 +152,35 @@ const [uploadedFileName, setUploadedFileName] = useState('')
           {/* Upload Section */}
           <section className="upload-section">
             <h2>Upload Audio/Video</h2>
-            <div 
-              {...getRootProps()} 
-              className={`upload-area ${isDragActive ? 'drag-active' : ''} ${uploading ? 'uploading' : ''}`}
-            >
-              <input {...getInputProps()} />
-              {uploading ? (
-                <p>Uploading...</p>
-              ) : isDragActive ? (
-                <p>Drop your file here!</p>
-              ) : (
-                <p>Drag and drop files here or click to browse</p>
-              )}
-            </div>
-            {uploadStatus && (
-              <div className="upload-status">
-                <p className={uploadedFileUrl ? 'success' : 'error'}>{uploadStatus}</p>
-                {uploadedFileUrl && (
-                  <div>
-                    <p>I'm gonna get rid of this, its only for testing</p>
-                    <p>File URL:</p>
-                    <a href={uploadedFileUrl} target="_blank" rel="noopener noreferrer">
-                      {uploadedFileUrl}
-                    </a>
-                  </div>
+            <div className="upload-content">
+              <div 
+                {...getRootProps()} 
+                className={`upload-area ${isDragActive ? 'drag-active' : ''} ${uploading ? 'uploading' : ''}`}
+              >
+                <input {...getInputProps()} />
+                {uploading ? (
+                  <p>Uploading...</p>
+                ) : isDragActive ? (
+                  <p>Drop your file here!</p>
+                ) : (
+                  <p>Drag and drop files here or click to browse</p>
                 )}
               </div>
-            )}
+              {uploadStatus && (
+                <div className="upload-status">
+                  <p className={uploadedFileUrl ? 'success' : 'error'}>{uploadStatus}</p>
+                  {uploadedFileUrl && (
+                    <div>
+                      <p>I'm gonna get rid of this, its only for testing</p>
+                      <p>File Name:</p>
+                      <a href={uploadedFileUrl} target="_blank" rel="noopener noreferrer">
+                        {uploadedFileName}
+                      </a>
+                    </div>
+                  )}
+                </div> 
+              )}
+            </div>
           </section>
           {/* Processing Section */}
 <section className="processing-section">
