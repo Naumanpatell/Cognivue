@@ -247,17 +247,7 @@ function MainPage() {
     {transcriptionResult ? (
       <div>
         <h3>Transcription:</h3>
-        <div 
-          style={{
-            background: 'var(--light-gray)',
-            padding: '1rem',
-            borderRadius: '8px',
-            marginTop: '1rem',
-            textAlign: 'left',
-            maxHeight: '400px',
-            overflowY: 'auto'
-          }}
-        >
+        <div className="transcription-result">
           {transcriptionResult}
         </div>
       </div>
