@@ -230,9 +230,21 @@ function MainPage() {
         </button>
         {processingStatus && (
           <div className="processing-status" style={{ marginTop: '1rem' }}>
-            <p className={transcriptionResult ? 'success' : 'error'}>
-              {processingStatus}
-            </p>
+            {processing ? (
+              <div className="processing-loader">
+                <div className="spinner"></div>
+                <div className="processing-text">{processingStatus}</div>
+                <div className="processing-dots">
+                  <div className="processing-dot"></div>
+                  <div className="processing-dot"></div>
+                  <div className="processing-dot"></div>
+                </div>
+              </div>
+            ) : (
+              <p className={transcriptionResult ? 'success' : 'error'}>
+                {processingStatus}
+              </p>
+            )}
           </div>
         )}
       </div>
