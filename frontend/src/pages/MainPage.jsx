@@ -8,6 +8,8 @@ import '../styles/MainPageStyle.css'
 function MainPage() {
   const navigate = useNavigate()
 
+  const [selectedResult, setSelectedResult] = useState('')
+
   const [processing, setProcessing] = useState(false)
   const [processingStatus, setProcessingStatus] = useState('')
   const [transcriptionResult, setTranscriptionResult] = useState('')
@@ -242,13 +244,21 @@ function MainPage() {
 
 {/* Results Section */}
 <section className="results-section">
-  <h2>Results</h2>
+  <div className="results-controls">
+    <button onClick={() => setSelectedResult('transcription')}>Transcription</button>
+    <button onClick={() => setSelectedResult('summary')}>Summary</button>
+    <button onClick={() => setSelectedResult('sentiment')}>Sentiment</button>
+    <button onClick={() => setSelectedResult('objectDetection')}>Object Detection</button>
+  </div>
+  <h3>{selectedResult === 'transcription' ? 'Transcription:' : selectedResult === 'summary' ? 'Summary:' : selectedResult === 'sentiment' ? 'Sentiment:' : 'Object Detection:'}</h3>
   <div className="results-area">
-    {transcriptionResult ? (
+    {selectedResult ? (
       <div>
-        <h3>Transcription:</h3>
         <div className="transcription-result">
-          {transcriptionResult}
+        {selectedResult === 'transcription' ? transcriptionResult : ''}
+        {selectedResult === 'summary' ? 'SUMMARY TEXT HERE' : ''}
+        {selectedResult === 'sentiment' ? 'SENTIMENT TEXT HERE' : ''}
+        {selectedResult === 'objectDetection' ? 'OBJECT DETECTION TEXT HERE' : ''}
         </div>
       </div>
     ) : (

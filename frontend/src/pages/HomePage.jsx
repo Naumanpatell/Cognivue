@@ -37,19 +37,19 @@ function HomePage() {
         </section>
 
         <section className="features-section">
-          <div className="feature-card">
+          <div className="feature-card" onClick={handleNavigation}>
             <h3>🎤 Speech Recognition</h3>
             <p>Automatic transcription using advanced AI models</p>
           </div>
-          <div className="feature-card">
+          <div className="feature-card" onClick={handleNavigation}>
             <h3>📊 Sentiment Analysis</h3>
             <p>Understand the emotional tone of your content</p>
           </div>
-          <div className="feature-card">
+          <div className="feature-card" onClick={handleNavigation}>
             <h3>👁️ Object Detection</h3>
             <p>Identify people, objects, and actions in scenes</p>
           </div>
-          <div className="feature-card">
+          <div className="feature-card" onClick={handleNavigation}>
             <h3>📝 Smart Summaries</h3>
             <p>Get concise summaries of long videos</p>
           </div>
