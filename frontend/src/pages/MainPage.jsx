@@ -147,14 +147,30 @@ function MainPage() {
       const {data, error} = await supabase.storage.from('user_videos').copy(uploadedFileName, newFileNameMp3)
       if (error) {
         alert('Error renaming file: ' + error.message)
-      } else {
-        alert('File renamed successfully')
-        console.log("New name: " + newFileName)
         setRenaming(false)
+        return
       }
-      const {data: {publicUrl}} = await supabase.storage.from('user_videos').remove([uploadedFileName])
+      
+      // Remove the old file
+      const {error: deleteError} = await supabase.storage.from('user_videos').remove([uploadedFileName])
+      if (deleteError) {
+        console.error('Error deleting old file:', deleteError)
+        alert('File renamed but old file could not be deleted: ' + deleteError.message)
+      }
+      
+      // Get the public URL for the new file
+      const {data: {publicUrl}} = supabase.storage.from('user_videos').getPublicUrl(newFileNameMp3)
+      
+      // Update state with new file information
       setUploadedFileName(newFileNameMp3)
-      setUploadedFileUrl(data.publicUrl)
+      setUploadedFileUrl(publicUrl)
+      
+      alert('File renamed successfully')
+      console.log("Original file deleted:", uploadedFileName)
+      console.log("New file created:", newFileNameMp3)
+      setRenaming(false)
+    } else {
+      setRenaming(false)
     }
   }
   
