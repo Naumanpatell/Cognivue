@@ -1,12 +1,3 @@
-/* From my understanding, you just put motion.x in front of the elements you want to animate */
-/* then u can put the animation details inside the motion.x */
-/* its pretty simple but take this advice: DOLLAPSE THE ELEMENT AFTER YOU HAVE MADE IT */
-/* IF YOU COLLAPSE IT IT JUST SAYS motion.form, motion.input, motion.button, ETC */
-
-
-
-
-
 
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
@@ -39,7 +30,7 @@ export default function Auth() {
           return
         }
         setMessage('Login successful!')
-        navigate('/main')
+       
       } else {
         const { error } = await supabase.auth.signUp({
           email,
@@ -50,6 +41,7 @@ export default function Auth() {
           return
         }
         setMessage('Check your email for the confirmation link!')
+        navigate('/main')
       }
     } catch (error) {
       setMessage('Error: ' + error.message)

@@ -23,18 +23,16 @@ def serve(path):
 @app.route('/transcribe', methods=['POST', 'OPTIONS'])
 def transcribe():
     if request.method == 'OPTIONS':
-        # Handle CORS preflight request
         return '', 200
-    
+
     if 'audio' not in request.files:
         return jsonify({'error': 'No audio file provided'}), 400
-    
     audio_file = request.files['audio']
+
     if audio_file.filename == '':
         return jsonify({'error': 'No audio file selected'}), 400
-    
-    # Validate file type
     allowed_extensions = {'wav', 'mp3', 'mpeg', 'm4a', 'webm'}
+    
     if '.' not in audio_file.filename or audio_file.filename.rsplit('.', 1)[1].lower() not in allowed_extensions:
         return jsonify({'error': 'Invalid file type. Please upload WAV, MP3, M4A, or WebM files.'}), 400
     
