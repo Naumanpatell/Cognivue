@@ -144,10 +144,7 @@ function MainPage() {
     const newFileName = prompt('Enter the new file name:')
     if (newFileName) {
       const newFileNameMp3 = newFileName + ".mp3"
-      const {data, error} = await supabase.storage.from('user_videos').update(newFileName, {
-        bucketName: 'user_videos',
-        fileName: newFileNameMp3
-      })
+      const {data, error} = await supabase.storage.from('user_videos').copy(uploadedFileName, newFileNameMp3)
       if (error) {
         alert('Error renaming file: ' + error.message)
       } else {
@@ -155,6 +152,9 @@ function MainPage() {
         console.log("New name: " + newFileName)
         setRenaming(false)
       }
+      const {data: {publicUrl}} = await supabase.storage.from('user_videos').remove([uploadedFileName])
+      setUploadedFileName(newFileNameMp3)
+      setUploadedFileUrl(data.publicUrl)
     }
   }
   
