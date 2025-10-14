@@ -49,7 +49,6 @@ export default function Auth() {
           setMessage('Error: ' + error.message)
           return
         }
-        setMessage('Check your email for the confirmation link!')
       }
     } catch (error) {
       setMessage('Error: ' + error.message)
