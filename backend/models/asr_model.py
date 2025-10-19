@@ -4,7 +4,6 @@ import librosa
 import numpy as np
 from transformers import pipeline
 from dotenv import load_dotenv
-from utils.supabase_clients import supabase
 
 load_dotenv()
 
