@@ -79,5 +79,5 @@ cognivue/
 ## Contributors:
 -Afonso 
 -Nauman Patel
--Mahant Lacximikant
+
 
