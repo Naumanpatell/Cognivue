@@ -22,7 +22,7 @@ function ProfileDropdown() {
       if (isOpen && buttonRef.current) {
         const buttonRect = buttonRef.current.getBoundingClientRect();
         setDropdownPosition({
-          top: buttonRect.bottom + 8,
+          top: buttonRect.bottom + 12,
           right: window.innerWidth - buttonRect.right
         });
       }
@@ -43,7 +43,7 @@ function ProfileDropdown() {
     if (!isOpen && buttonRef.current) {
       const buttonRect = buttonRef.current.getBoundingClientRect();
       setDropdownPosition({
-        top: buttonRect.bottom + 8,
+        top: buttonRect.bottom + 12,
         right: window.innerWidth - buttonRect.right
       });
     }
@@ -103,7 +103,7 @@ function ProfileDropdown() {
             position: 'fixed',
             top: `${dropdownPosition.top}px`,
             right: `${dropdownPosition.right}px`,
-            zIndex: 9999
+            zIndex: 1000000000000
           }}
         >
           <div className="menu-item" onClick={() => handleMenuItemClick('profile')}>

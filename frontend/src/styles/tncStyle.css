@@ -4,22 +4,59 @@
     background: linear-gradient(135deg, var(--light-gray) 0%, var(--soft-blue) 100%);
     color: var(--primary-dark);
     transition: background 0.3s ease, color 0.3s ease;
+    position: relative;
+  }
+
+  .terms-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(6, 190, 225, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(238, 150, 75, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .dark-theme .terms-container::before {
+    background: radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(6, 190, 225, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(238, 150, 75, 0.05) 0%, transparent 70%);
   }
   
   .terms-header {
     padding: 4rem 1rem 2rem;
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     color: var(--white);
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
+    border-bottom: 1px solid var(--glass-border);
+    position: relative;
+    overflow: hidden;
   }
 
-  /* Dark theme header - purple gradient */
+  .terms-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(6, 190, 225, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* Dark theme header - glassmorphism */
   .dark-theme .terms-header {
-    background: linear-gradient(135deg, #1a1a2e 0%, #2d1b69 50%, #16213e 100%);
+    background: var(--glass-bg);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
   }
 
   .terms-header .header-content {
@@ -68,13 +105,34 @@
   }
   
   .terms-section {
-    background: var(--white);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     padding: 2.5rem;
     margin-bottom: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px var(--shadow-light);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px var(--shadow-light), 0 4px 16px var(--glass-shadow);
+    border: 1px solid var(--glass-border);
     border-left: 4px solid var(--primary-orange);
-    transition: background 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .terms-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary-cyan);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .terms-section:hover::before {
+    transform: scaleX(1);
   }
   
   .terms-section h2 {
@@ -115,11 +173,15 @@
   }
   
   .contact-info {
-    background: var(--light-gray);
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     padding: 1.5rem;
-    border-radius: 8px;
+    border-radius: 12px;
     margin-top: 1rem;
+    border: 1px solid var(--glass-border);
     border-left: 3px solid var(--primary-cyan);
+    box-shadow: 0 4px 16px var(--glass-shadow);
   }
   
   .contact-info p {
@@ -132,13 +194,28 @@
   }
   
   .acknowledgment {
-    background: var(--white);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(10, 17, 40, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px var(--shadow-light), 0 4px 16px var(--glass-shadow);
     border: 2px solid var(--primary-orange);
     text-align: center;
     margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .acknowledgment::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-cyan), var(--primary-orange));
+    border-radius: 16px 16px 0 0;
   }
   
   .acknowledgment p {
