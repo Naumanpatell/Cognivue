@@ -9,7 +9,7 @@ from utils.supabase_clients import supabase
 load_dotenv()
 
 HF_TOKEN = os.getenv("HF_TOKEN")
-MODEL_ID = "openai/whisper-base"
+MODEL_ID = "openai/whisper-tiny"
 
 asr_pipeline = pipeline(
     "automatic-speech-recognition",
@@ -59,8 +59,8 @@ def transcribe_audio(file_like, return_timestamps=True):
         result = asr_pipeline(
             audio_data,
             return_timestamps=return_timestamps,
-            chunk_length_s=30,
-            stride_length_s=5
+            chunk_length_s=15,
+            stride_length_s=2
         )
 
         if isinstance(result, dict):
