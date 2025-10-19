@@ -4,6 +4,7 @@ import librosa
 import numpy as np
 from transformers import pipeline
 from dotenv import load_dotenv
+from utils.supabase_clients import supabase
 
 load_dotenv()
 
@@ -18,19 +19,48 @@ asr_pipeline = pipeline(
 
 def transcribe_audio(file_like, return_timestamps=True):
     try:
+        # Load audio using librosa to avoid FFmpeg dependency
         if hasattr(file_like, 'read'):
-            audio_data = file_like.read()
-            file_like.seek(0) 
+            # Save to temporary file and load with librosa
+            import tempfile
+            tmp_file = tempfile.NamedTemporaryFile(suffix='.wav', delete=False)
+            try:
+                file_like.seek(0)
+                tmp_file.write(file_like.read())
+                tmp_file.close()  # Close the file handle
+                
+                # Load with librosa (handles MP3, WAV, etc. without FFmpeg)
+                audio_data, sample_rate = librosa.load(tmp_file.name, sr=16000)
+            finally:
+                # Clean up temp file
+                try:
+                    os.unlink(tmp_file.name)
+                except:
+                    pass
         elif isinstance(file_like, bytes):
-            audio_data = file_like
+            # Handle bytes by saving to temp file
+            import tempfile
+            tmp_file = tempfile.NamedTemporaryFile(suffix='.wav', delete=False)
+            try:
+                tmp_file.write(file_like)
+                tmp_file.close()  # Close the file handle
+                
+                audio_data, sample_rate = librosa.load(tmp_file.name, sr=16000)
+            finally:
+                # Clean up temp file
+                try:
+                    os.unlink(tmp_file.name)
+                except:
+                    pass
         else:
-            audio_data = file_like
+            # Assume it's a file path
+            audio_data, sample_rate = librosa.load(file_like, sr=16000)
         
         result = asr_pipeline(
             audio_data,
             return_timestamps=return_timestamps,
-            chunk_length=30,
-            stride_length=5
+            chunk_length_s=30,
+            stride_length_s=5
         )
 
         if isinstance(result, dict):
@@ -49,9 +79,9 @@ def transcribe_audio(file_like, return_timestamps=True):
     except Exception as e:
         print(f"Error transcribing audio: {e}")
         print(f"Error type: {type(e)}")
-        import traceback
-        traceback.print_exc()
-        return None
+        # import traceback
+        # traceback.print_exc()
+        # return None
 
 def get_available_models():
     return ["tiny", "base", "small", "medium", "large"]

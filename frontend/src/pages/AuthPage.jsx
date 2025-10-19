@@ -30,7 +30,7 @@ export default function Auth() {
           return
         }
         setMessage('Login successful!')
-       
+       navigate('/main')
       } else {
         const { error } = await supabase.auth.signUp({
           email,
@@ -40,8 +40,7 @@ export default function Auth() {
           setMessage('Error: ' + error.message)
           return
         }
-        setMessage('Check your email for the confirmation link!')
-        navigate('/main')
+        //setMessage('Check your email for the confirmation link!')
       }
     } catch (error) {
       setMessage('Error: ' + error.message)
