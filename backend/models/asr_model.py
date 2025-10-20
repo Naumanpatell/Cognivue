@@ -72,9 +72,6 @@ def transcribe_audio(file_like, return_timestamps=True):
     except Exception as e:
         print(f"Error transcribing audio: {e}")
         print(f"Error type: {type(e)}")
-        # import traceback
-        # traceback.print_exc()
-        # return None
 
 def get_available_models():
     return ["tiny", "base", "small", "medium", "large"]
