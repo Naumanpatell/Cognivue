@@ -36,7 +36,6 @@ def transcribe_audio(file_like, return_timestamps=True):
             import tempfile
             tmp_file = tempfile.NamedTemporaryFile(suffix='.wav', delete=False)
             try:
-                tmp_file = file_like.seek(0)
                 tmp_file.write(file_like)
                 tmp_file.close() 
                 
@@ -72,9 +71,6 @@ def transcribe_audio(file_like, return_timestamps=True):
     except Exception as e:
         print(f"Error transcribing audio: {e}")
         print(f"Error type: {type(e)}")
-
-def get_available_models():
-    return ["tiny", "base", "small", "medium", "large"]
 
 def get_model_info():
     return {

@@ -2,6 +2,7 @@ import time
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from models.asr_model import transcribe_audio
+from models.summarizer_model import summarize_text, get_available_summarizers, process_summarization
 from utils.supabase_clients import supabase
 
 app = Flask(__name__)
@@ -51,6 +52,58 @@ def transcribe():
     except Exception as e:
         print(f"Transcription error: {str(e)}")
         return jsonify({'error': f'Transcription error: {str(e)}'}), 500
+
+
+@app.route('/summarize', methods=['POST'])
+def summarize():
+    data = request.get_json()
+    if not data or 'text' not in data:
+        return jsonify({'error': 'No text provided for summarization'}), 400
+    
+    text = data['text']
+    
+    # Get optional parameters with defaults
+    max_length = data.get('max_length', 130)
+    min_length = data.get('min_length', 30)
+    
+    try:
+        start_time = time.time()
+        print(f"Starting summarization at {time.strftime('%H:%M:%S')}")
+        
+        summary = process_summarization(text, max_length, min_length)
+        
+        end_time = time.time()
+        duration = end_time - start_time
+        duration_formatted = format_duration(duration)
+        print(f"Summarization completed in {duration_formatted} (MM:SS)")
+        
+        if not summary:
+            return jsonify({'error': 'Summarization failed - no summary was generated'}), 400
+        
+        return jsonify({
+            'summary': summary,
+            'processing_time': duration_formatted,
+            'processing_time_seconds': round(duration, 2),
+            'original_length': len(text),
+            'summary_length': len(summary)
+        })
+        
+    except Exception as e:
+        print(f"Summarization error: {str(e)}")
+        return jsonify({'error': f'Summarization error: {str(e)}'}), 500
+
+
+@app.route('/summarizers', methods=['GET'])
+def get_summarizers():
+    """Get available summarizer models"""
+    try:
+        models = get_available_summarizers()
+        return jsonify({
+            'available_models': models,
+            'current_model': 'facebook/bart-large-cnn'
+        })
+    except Exception as e:
+        return jsonify({'error': f'Failed to get summarizers: {str(e)}'}), 500
 
 
 @app.route('/process_supabase_file', methods=['POST'])
