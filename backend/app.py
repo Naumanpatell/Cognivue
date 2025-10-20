@@ -2,7 +2,7 @@ import time
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from models.asr_model import transcribe_audio
-from models.summarizer_model import summarize_text, get_available_summarizers, process_summarization
+from models.summarizer_model import summarize_text, get_available_summarizers
 from utils.supabase_clients import supabase
 
 app = Flask(__name__)
@@ -70,7 +70,7 @@ def summarize():
         start_time = time.time()
         print(f"Starting summarization at {time.strftime('%H:%M:%S')}")
         
-        summary = process_summarization(text, max_length, min_length)
+        summary = summarize_text(text, max_length, min_length)
         
         end_time = time.time()
         duration = end_time - start_time
