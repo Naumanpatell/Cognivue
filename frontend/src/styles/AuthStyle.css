@@ -11,6 +11,24 @@
   transition: background 0.3s ease;
 }
 
+.auth-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(6, 190, 225, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(238, 150, 75, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.dark-theme .auth-page::before {
+  background: radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(6, 190, 225, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 50% 50%, rgba(238, 150, 75, 0.05) 0%, transparent 70%);
+}
+
 .auth-header {
   position: absolute;
   display: flex;
@@ -35,16 +53,18 @@
 
 
 .auth-box {
-  background: var(--white);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: 3rem 2.5rem;
   border-radius: 20px;
-  box-shadow: 0 8px 32px var(--shadow-light);
-  border: 1px solid rgba(6, 190, 225, 0.1);
+  box-shadow: 0 8px 32px var(--shadow-light), 0 4px 16px var(--glass-shadow);
+  border: 1px solid var(--glass-border);
   width: 100%;
   max-width: 450px;
   position: relative;
   overflow: hidden;
-  transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .auth-box::before {
@@ -72,10 +92,14 @@
 .tabs {
   display: flex;
   margin-bottom: 2.5rem;
-  background: var(--light-gray);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 4px;
   position: relative;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 16px var(--glass-shadow);
 }
 
 .tabs button {
@@ -113,7 +137,7 @@ form {
 
 form input {
   padding: 1rem 1.2rem;
-  border: 2px solid rgba(6, 190, 225, 0.15);
+  border: 2px solid var(--glass-border);
   border-radius: 12px;
   font-size: 1rem;
   background: var(--card-bg);
@@ -139,16 +163,18 @@ form button {
   padding: 1.2rem 2rem;
   background: linear-gradient(135deg, var(--primary-orange), #f4a261);
   color: var(--white);
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   margin-top: 1rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 6px 20px rgba(238, 150, 75, 0.3);
+  box-shadow: 0 6px 20px rgba(238, 150, 75, 0.3), 0 4px 16px rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 form button::before {
@@ -183,7 +209,7 @@ form button:active {
   text-align: center;
   background: var(--card-bg);
   color: var(--primary-dark);
-  border: 1px solid rgba(6, 190, 225, 0.15);
+  border: 1px solid var(--glass-border);
   font-weight: 500;
   transition: all 0.3s ease;
 }

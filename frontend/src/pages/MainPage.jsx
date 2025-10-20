@@ -8,6 +8,8 @@ import '../styles/MainPageStyle.css'
 function MainPage() {
   const navigate = useNavigate()
 
+  const [selectedResult, setSelectedResult] = useState('')
+
   const [processing, setProcessing] = useState(false)
   const [processingStatus, setProcessingStatus] = useState('')
   const [transcriptionResult, setTranscriptionResult] = useState('')
@@ -142,17 +144,33 @@ function MainPage() {
     const newFileName = prompt('Enter the new file name:')
     if (newFileName) {
       const newFileNameMp3 = newFileName + ".mp3"
-      const {data, error} = await supabase.storage.from('user_videos').update(newFileName, {
-        bucketName: 'user_videos',
-        fileName: newFileNameMp3
-      })
+      const {data, error} = await supabase.storage.from('user_videos').copy(uploadedFileName, newFileNameMp3)
       if (error) {
         alert('Error renaming file: ' + error.message)
-      } else {
-        alert('File renamed successfully')
-        console.log("New name: " + newFileName)
         setRenaming(false)
+        return
       }
+      
+      // Remove the old file
+      const {error: deleteError} = await supabase.storage.from('user_videos').remove([uploadedFileName])
+      if (deleteError) {
+        console.error('Error deleting old file:', deleteError)
+        alert('File renamed but old file could not be deleted: ' + deleteError.message)
+      }
+      
+      // Get the public URL for the new file
+      const {data: {publicUrl}} = supabase.storage.from('user_videos').getPublicUrl(newFileNameMp3)
+      
+      // Update state with new file information
+      setUploadedFileName(newFileNameMp3)
+      setUploadedFileUrl(publicUrl)
+      
+      alert('File renamed successfully')
+      console.log("Original file deleted:", uploadedFileName)
+      console.log("New file created:", newFileNameMp3)
+      setRenaming(false)
+    } else {
+      setRenaming(false)
     }
   }
   
@@ -228,9 +246,21 @@ function MainPage() {
         </button>
         {processingStatus && (
           <div className="processing-status" style={{ marginTop: '1rem' }}>
-            <p className={transcriptionResult ? 'success' : 'error'}>
-              {processingStatus}
-            </p>
+            {processing ? (
+              <div className="processing-loader">
+                <div className="spinner"></div>
+                <div className="processing-text">{processingStatus}</div>
+                <div className="processing-dots">
+                  <div className="processing-dot"></div>
+                  <div className="processing-dot"></div>
+                  <div className="processing-dot"></div>
+                </div>
+              </div>
+            ) : (
+              <p className={transcriptionResult ? 'success' : 'error'}>
+                {processingStatus}
+              </p>
+            )}
           </div>
         )}
       </div>
@@ -242,23 +272,21 @@ function MainPage() {
 
 {/* Results Section */}
 <section className="results-section">
-  <h2>Results</h2>
+  <div className="results-controls">
+    <button onClick={() => setSelectedResult('transcription')}>Transcription</button>
+    <button onClick={() => setSelectedResult('summary')}>Summary</button>
+    <button onClick={() => setSelectedResult('sentiment')}>Sentiment</button>
+    <button onClick={() => setSelectedResult('objectDetection')}>Object Detection</button>
+  </div>
+  <h3>{selectedResult === 'transcription' ? 'Transcription:' : selectedResult === 'summary' ? 'Summary:' : selectedResult === 'sentiment' ? 'Sentiment:' : 'Object Detection:'}</h3>
   <div className="results-area">
-    {transcriptionResult ? (
+    {selectedResult ? (
       <div>
-        <h3>Transcription:</h3>
-        <div 
-          style={{
-            background: 'var(--light-gray)',
-            padding: '1rem',
-            borderRadius: '8px',
-            marginTop: '1rem',
-            textAlign: 'left',
-            maxHeight: '400px',
-            overflowY: 'auto'
-          }}
-        >
-          {transcriptionResult}
+        <div className="transcription-result">
+        {selectedResult === 'transcription' ? transcriptionResult : ''}
+        {selectedResult === 'summary' ? 'SUMMARY TEXT HERE' : ''}
+        {selectedResult === 'sentiment' ? 'SENTIMENT TEXT HERE' : ''}
+        {selectedResult === 'objectDetection' ? 'OBJECT DETECTION TEXT HERE' : ''}
         </div>
       </div>
     ) : (
