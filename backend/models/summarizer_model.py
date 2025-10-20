@@ -26,4 +26,4 @@ def summarization (text, max_length, min_length):
         return summary[0]["summary_text"]
     except Exception as e:
         print("Summarization Failed")
-        return None
+        return None 
