@@ -18,43 +18,37 @@ asr_pipeline = pipeline(
 
 def transcribe_audio(file_like, return_timestamps=True):
     try:
-        # Load audio using librosa to avoid FFmpeg dependency
         if hasattr(file_like, 'read'):
-            # Save to temporary file and load with librosa
             import tempfile
             tmp_file = tempfile.NamedTemporaryFile(suffix='.wav', delete=False)
             try:
                 file_like.seek(0)
                 tmp_file.write(file_like.read())
-                tmp_file.close()  # Close the file handle
-                
-                # Load with librosa (handles MP3, WAV, etc. without FFmpeg)
+                tmp_file.close()  
+        
                 audio_data, sample_rate = librosa.load(tmp_file.name, sr=16000)
             finally:
-                # Clean up temp file
                 try:
                     os.unlink(tmp_file.name)
                 except:
                     pass
         elif isinstance(file_like, bytes):
-            # Handle bytes by saving to temp file
             import tempfile
             tmp_file = tempfile.NamedTemporaryFile(suffix='.wav', delete=False)
             try:
+                tmp_file = file_like.seek(0)
                 tmp_file.write(file_like)
-                tmp_file.close()  # Close the file handle
+                tmp_file.close() 
                 
                 audio_data, sample_rate = librosa.load(tmp_file.name, sr=16000)
             finally:
-                # Clean up temp file
                 try:
                     os.unlink(tmp_file.name)
                 except:
                     pass
         else:
-            # Assume it's a file path
             audio_data, sample_rate = librosa.load(file_like, sr=16000)
-        
+
         result = asr_pipeline(
             audio_data,
             return_timestamps=return_timestamps,

@@ -40,8 +40,12 @@ def test_transcription():
         if response.status_code == 200:
             data = response.json()
             transcription = data.get('transcription', '')
+            processing_time = data.get('processing_time', 'N/A')
+            processing_time_seconds = data.get('processing_time_seconds', 'N/A')
             print(f"Transcription successful!")
             print(f"Result: {transcription}")
+            print(f"Processing time: {processing_time} (MM:SS format)")
+            print(f"Processing time: {processing_time_seconds} seconds")
             return True
         else:
             print(f"Transcription failed: {response.text}")
