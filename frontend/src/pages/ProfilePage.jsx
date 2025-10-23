@@ -14,13 +14,12 @@ export default function ProfilePage({ session }) {
   const [avatar_url, setAvatarUrl] = useState(null)
   const [message, setMessage] = useState('')
 
-  // Redirect to home if no session
-  if (!session || !session.user) {
-    navigate('/')
-    return null
-  }
-  
   useEffect(() => {
+    // Redirect to home if no session
+    if (!session || !session.user) {
+      navigate('/')
+      return
+    }
     let ignore = false
     async function getProfile() {
       setLoading(true)
@@ -121,6 +120,11 @@ export default function ProfilePage({ session }) {
       setAvatarUrl(avatarUrl)
       setMessage('Profile picture updated successfully!')
     }
+  }
+
+  // Don't render anything if no session (will redirect in useEffect)
+  if (!session || !session.user) {
+    return null
   }
 
   return (

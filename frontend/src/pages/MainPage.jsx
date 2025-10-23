@@ -313,33 +313,92 @@ function MainPage() {
 
 {/* Results Section */}
 <section className="results-section">
+  <h2>Results</h2>
+  
   <div className="results-controls">
-    <button onClick={() => setSelectedResult('transcription')}>Transcription</button>
-    <button onClick={() => setSelectedResult('summary')}>Summary</button>
-    <button onClick={() => setSelectedResult('sentiment')}>Sentiment</button>
-    <button onClick={() => setSelectedResult('objectDetection')}>Object Detection</button>
+    <button 
+      className={selectedResult === 'transcription' ? 'active' : ''}
+      onClick={() => setSelectedResult('transcription')}
+    >
+      Transcription
+    </button>
+    <button 
+      className={selectedResult === 'summary' ? 'active' : ''}
+      onClick={() => setSelectedResult('summary')}
+    >
+      Summary
+    </button>
+    <button 
+      className={selectedResult === 'sentiment' ? 'active' : ''}
+      onClick={() => setSelectedResult('sentiment')}
+    >
+      Sentiment
+    </button>
+    <button 
+      className={selectedResult === 'objectDetection' ? 'active' : ''}
+      onClick={() => setSelectedResult('objectDetection')}
+    >
+      Object Detection
+    </button>
   </div>
-  <h3>{selectedResult === 'transcription' ? 'Transcription:' : selectedResult === 'summary' ? 'Summary:' : selectedResult === 'sentiment' ? 'Sentiment:' : 'Object Detection:'}</h3>
   
-  {transcriptionResult === '' && (
-    <p>No transcription results available</p>
-  )}
-  {transcriptionResult !== '' && (
-    <button onClick={handleSummarizeFile}>Summarize</button>
-  )}
-  
-  <div className="results-area">
-    {selectedResult ? (
-      <div>
-        <div className="transcription-result">
-        {selectedResult === 'transcription' ? transcriptionResult : ''}
-        {selectedResult === 'summary' ? summarisationResult : ''}
-        {selectedResult === 'sentiment' ? 'SENTIMENT TEXT HERE' : ''}
-        {selectedResult === 'objectDetection' ? 'OBJECT DETECTION TEXT HERE' : ''}
+  <div className="result-content">
+    {selectedResult === 'transcription' && (
+      <div className="result-display">
+        <h3>Transcription</h3>
+        {transcriptionResult ? (
+          <div className="result-text">{transcriptionResult}</div>
+        ) : (
+          <div className="result-placeholder">
+            <p>No transcription available. Process an audio file first.</p>
+          </div>
+        )}
+      </div>
+    )}
+    
+    {selectedResult === 'summary' && (
+      <div className="result-display">
+        <h3>Summary</h3>
+        {summarisationResult ? (
+          <div className="result-text">{summarisationResult}</div>
+        ) : (
+          <div className="result-placeholder">
+            <p>No summary available yet.</p>
+            {transcriptionResult && (
+              <button onClick={handleSummarizeFile} className="cta-button">
+                Generate Summary
+              </button>
+            )}
+            {!transcriptionResult && (
+              <p className="help-text">Process an audio file first to generate a summary.</p>
+            )}
+          </div>
+        )}
+      </div>
+    )}
+    
+    {selectedResult === 'sentiment' && (
+      <div className="result-display">
+        <h3>Sentiment Analysis</h3>
+        <div className="result-placeholder">
+          <p>Sentiment analysis feature coming soon...</p>
         </div>
       </div>
-    ) : (
-      <p>Transcription results will appear here after processing...</p>
+    )}
+    
+    {selectedResult === 'objectDetection' && (
+      <div className="result-display">
+        <h3>Object Detection</h3>
+        <div className="result-placeholder">
+          <p>Object detection feature coming soon...</p>
+        </div>
+      </div>
+    )}
+    
+    {!selectedResult && (
+      <div className="result-placeholder">
+        <p>Select a result type above to view your processed data.</p>
+      </div>
     )}
   </div>
 </section>
@@ -349,3 +408,4 @@ function MainPage() {
   }
   
   export default MainPage;
+
