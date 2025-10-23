@@ -79,6 +79,9 @@ function MainPage() {
     setUploading(true)
     setUploadStatus('Uploading file...')
     setUploadedFileUrl('')
+    setSummarisationResult('')
+    setTranscriptionResult('')
+    setSelectedResult('empty')
 
     try {
       const result = await handleUpload(file)
