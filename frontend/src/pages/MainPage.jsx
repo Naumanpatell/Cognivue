@@ -8,7 +8,7 @@ import '../styles/MainPageStyle.css'
 function MainPage() {
   const navigate = useNavigate()
 
-  const [selectedResult, setSelectedResult] = useState('')
+  const [selectedResult, setSelectedResult] = useState('empty')
 
   const [processing, setProcessing] = useState(false)
   const [processingStatus, setProcessingStatus] = useState('')
@@ -313,6 +313,7 @@ function MainPage() {
 
 {/* Results Section */}
 <section className="results-section">
+  <button className="cta-button" onClick={() => setSelectedResult('empty')}>RESET</button>
   <h2>Results</h2>
   
   <div className="results-controls">
@@ -395,7 +396,7 @@ function MainPage() {
       </div>
     )}
     
-    {!selectedResult && (
+    {selectedResult === 'empty' && (
       <div className="result-placeholder">
         <p>Select a result type above to view your processed data.</p>
       </div>
