@@ -13,6 +13,7 @@ function MainPage() {
   const [processing, setProcessing] = useState(false)
   const [processingStatus, setProcessingStatus] = useState('')
   const [transcriptionResult, setTranscriptionResult] = useState('')
+  const [summarisationResult, setSummarisationResult] = useState('')
   const [uploadedFileName, setUploadedFileName] = useState('')
 
   const [renaming, setRenaming] = useState(false)
@@ -132,6 +133,46 @@ function MainPage() {
       setProcessing(false)
     }
   }
+
+
+  const handleSummarizeFile = async () => {
+    console.log('Summarizing transcription...')
+    if (!transcriptionResult) {
+      alert('No transcription available to summarize. Please process the audio file first.')
+      return
+    }
+  
+    setProcessing(true)
+    setProcessingStatus('Summarizing transcription...')
+    setSummarisationResult('')
+  
+    try {
+      const response = await fetch('http://localhost:5001/summarize', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: transcriptionResult
+        })
+      })
+  
+      const data = await response.json()
+      
+      if (response.ok) {
+        setProcessingStatus('Summarizing completed!')
+        setSummarisationResult(data.summary)
+      } else {
+        setProcessingStatus(`Summarizing failed: ${data.error}`)
+      }
+    } catch (error) {
+      console.error('Summarizing error:', error)
+      setProcessingStatus(`Summarizing failed: ${error.message}`)
+    } finally {
+      setProcessing(false)
+    }
+  }
+
 
   const renameFile = async () => {
     if (!uploadedFileName) {
@@ -279,12 +320,13 @@ function MainPage() {
     <button onClick={() => setSelectedResult('objectDetection')}>Object Detection</button>
   </div>
   <h3>{selectedResult === 'transcription' ? 'Transcription:' : selectedResult === 'summary' ? 'Summary:' : selectedResult === 'sentiment' ? 'Sentiment:' : 'Object Detection:'}</h3>
+  <button onClick={handleSummarizeFile}>Summarize</button>
   <div className="results-area">
     {selectedResult ? (
       <div>
         <div className="transcription-result">
         {selectedResult === 'transcription' ? transcriptionResult : ''}
-        {selectedResult === 'summary' ? 'SUMMARY TEXT HERE' : ''}
+        {selectedResult === 'summary' ? summarisationResult : ''}
         {selectedResult === 'sentiment' ? 'SENTIMENT TEXT HERE' : ''}
         {selectedResult === 'objectDetection' ? 'OBJECT DETECTION TEXT HERE' : ''}
         </div>
