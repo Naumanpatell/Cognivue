@@ -13,6 +13,9 @@
     --shadow-light: rgba(10, 17, 40, 0.08);
     --shadow-medium: rgba(10, 17, 40, 0.12);
     --shadow-cyan: rgba(6, 190, 225, 0.25);
+    --glass-bg: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: rgba(255, 255, 255, 0.1);
   }
   
   /* Dark Theme Variables */
@@ -29,6 +32,9 @@
     --shadow-light: rgba(0, 0, 0, 0.3);
     --shadow-medium: rgba(0, 0, 0, 0.4);
     --shadow-cyan: rgba(139, 92, 246, 0.3);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: rgba(255, 255, 255, 0.05);
   }
   
   * {
@@ -75,6 +81,7 @@
   flex-wrap: wrap;
   gap: 1rem;
   border-bottom: 1px solid var(--glass-border);
+  z-index: 2147483646;
 }
   
   /* Dark theme header - glassmorphism */
@@ -95,7 +102,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    z-index: 1;
+    z-index: 2147483647;
   }
   
   .main-header::before {
