@@ -320,7 +320,14 @@ function MainPage() {
     <button onClick={() => setSelectedResult('objectDetection')}>Object Detection</button>
   </div>
   <h3>{selectedResult === 'transcription' ? 'Transcription:' : selectedResult === 'summary' ? 'Summary:' : selectedResult === 'sentiment' ? 'Sentiment:' : 'Object Detection:'}</h3>
-  <button onClick={handleSummarizeFile}>Summarize</button>
+  
+  {transcriptionResult === '' && (
+    <p>No transcription results available</p>
+  )}
+  {transcriptionResult !== '' && (
+    <button onClick={handleSummarizeFile}>Summarize</button>
+  )}
+  
   <div className="results-area">
     {selectedResult ? (
       <div>
