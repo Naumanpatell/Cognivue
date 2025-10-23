@@ -1,0 +1,303 @@
+/* Profile Settings Styling - Clean and professional settings interface */
+
+.profile-settings-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--light-gray) 0%, var(--soft-blue) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 1rem;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.profile-settings-header {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10;
+}
+
+.profile-settings-form {
+  background: var(--white);
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px var(--shadow-light);
+  border: 1px solid rgba(6, 190, 225, 0.1);
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-settings-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-cyan), var(--primary-orange));
+  border-radius: 20px 20px 0 0;
+}
+
+.profile-settings-form h1 {
+  text-align: center;
+  color: var(--primary-dark);
+  margin-bottom: 2.5rem;
+  font-size: 2.2rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.profile-settings-form h2 {
+  text-align: center;
+  color: var(--primary-dark);
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+.profile-settings-form > div {
+  margin-bottom: 1.5rem;
+}
+
+.profile-settings-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--primary-dark);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.profile-settings-form input {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border: 2px solid rgba(6, 190, 225, 0.15);
+  border-radius: 12px;
+  font-size: 1rem;
+  background: var(--card-bg);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--primary-dark);
+  font-weight: 500;
+  box-sizing: border-box;
+}
+
+.profile-settings-form input:focus {
+  outline: none;
+  border-color: var(--primary-cyan);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(6, 190, 225, 0.1);
+  transform: translateY(-1px);
+}
+
+.profile-settings-form input:disabled {
+  background: var(--light-gray);
+  color: var(--primary-navy);
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.profile-settings-form input::placeholder {
+  color: var(--primary-navy);
+  opacity: 0.7;
+}
+
+.profile-settings-form .button {
+  width: 100%;
+  padding: 1.2rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.profile-settings-form .button.primary {
+  background: linear-gradient(135deg, var(--primary-orange), #f4a261);
+  color: var(--white);
+  box-shadow: 0 6px 20px rgba(238, 150, 75, 0.3);
+}
+
+.profile-settings-form .button.primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.profile-settings-form .button.primary:hover::before {
+  left: 100%;
+}
+
+.profile-settings-form .button.primary:hover {
+  background: linear-gradient(135deg, var(--primary-navy), #0d4f8c);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(8, 75, 131, 0.4);
+}
+
+.profile-settings-form .button.primary:active {
+  transform: translateY(-1px);
+}
+
+.profile-settings-form .button.primary:disabled {
+  background: var(--light-gray);
+  color: var(--primary-navy);
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.profile-settings-form .button.primary:disabled:hover {
+  background: var(--light-gray);
+  transform: none;
+  box-shadow: none;
+}
+
+.profile-settings-form .button:not(.primary) {
+  background: var(--white);
+  color: var(--primary-navy);
+  border: 2px solid rgba(6, 190, 225, 0.2);
+  box-shadow: 0 4px 16px var(--shadow-light);
+}
+
+.profile-settings-form .button:not(.primary):hover {
+  background: var(--light-gray);
+  border-color: var(--primary-cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--shadow-medium);
+}
+
+.profile-settings-form .button:not(.primary):active {
+  transform: translateY(0);
+}
+
+/* Avatar section styling */
+.profile-avatar-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 1px solid rgba(6, 190, 225, 0.1);
+}
+
+.profile-avatar-section h3 {
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Success/Error message styling */
+.form-message {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.form-message.success {
+  background: rgba(6, 190, 225, 0.1);
+  border: 1px solid var(--primary-cyan);
+  color: var(--primary-navy);
+}
+
+.form-message.error {
+  background: rgba(238, 150, 75, 0.1);
+  border: 1px solid var(--primary-orange);
+  color: var(--primary-dark);
+}
+
+/* Settings-specific button styling */
+.settings-button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.settings-button-group .button {
+  margin-bottom: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .profile-settings-form {
+    padding: 2.5rem 2rem;
+    margin: 1rem;
+  }
+  
+  .profile-settings-form h1 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+  
+  .profile-settings-form h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .profile-settings-form input {
+    padding: 0.9rem 1rem;
+  }
+  
+  .profile-settings-form .button {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .profile-avatar-section {
+    padding: 1.2rem;
+  }
+  
+  .profile-avatar-section h3 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-settings-header {
+    top: 1rem;
+    right: 1rem;
+  }
+  
+  .profile-settings-form {
+    padding: 2rem 1.5rem;
+  }
+  
+  .profile-settings-form h1 {
+    font-size: 1.6rem;
+  }
+  
+  .profile-settings-form h2 {
+    font-size: 1.3rem;
+  }
+  
+  .profile-avatar-section {
+    padding: 1rem;
+  }
+  
+  .profile-avatar-section h3 {
+    font-size: 1rem;
+  }
+}

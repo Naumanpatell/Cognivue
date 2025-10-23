@@ -8,6 +8,7 @@ import Auth from './pages/AuthPage'
 import MainPage from './pages/MainPage'
 import Account from './components/Account'
 import TncPage from './pages/tncPage'
+import ProfilePage from './pages/ProfilePage'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -31,6 +32,7 @@ function App() {
             <Route path="/auth" element={!session ? <Auth /> : <Account key={session.user.id} session={session} />} />
             <Route path="/main" element={<MainPage />} />
             <Route path="/tnc" element={<TncPage />} />
+            <Route path="/profile" element={session ? <ProfilePage session={session} /> : <HomePage />} />
           </Routes>
         </div>
       </Router>

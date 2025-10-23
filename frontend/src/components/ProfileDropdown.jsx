@@ -53,7 +53,7 @@ function ProfileDropdown() {
   const handleMenuItemClick = (action) => {
     switch(action) {
       case 'profile':
-        console.log('Profile button pressed');
+        navigate('/profile');
         break;
       case 'settings':
         console.log('Settings button pressed');
