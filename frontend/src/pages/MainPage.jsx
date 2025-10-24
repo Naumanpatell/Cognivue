@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDropzone } from 'react-dropzone';
 import { supabase } from '../lib/supabase';
@@ -7,6 +7,10 @@ import '../styles/MainPageStyle.css'
 
 function MainPage() {
   const navigate = useNavigate()
+
+  const [processingTimeStart, setProcessingTimeStart] = useState(null)
+  const [timerInterval, setTimerInterval] = useState(null)
+  const [processingDuration, setProcessingDuration] = useState('00:00')
 
   const [selectedResult, setSelectedResult] = useState('empty')
   const [selectedInputMethod, setSelectedInputMethod] = useState('upload')
@@ -22,6 +26,38 @@ function MainPage() {
   const [uploading, setUploading] = useState(false)
   const [uploadStatus, setUploadStatus] = useState('')
   const [uploadedFileUrl, setUploadedFileUrl] = useState('')
+
+
+  useEffect(() => {
+    return () => {
+      if (timerInterval) {
+        clearInterval(timerInterval)
+      }
+    }
+  }, [timerInterval])
+
+  const startProcessingTimer = () => {
+    const startTime = Date.now()
+    setProcessingTimeStart(startTime)
+    
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - startTime
+      const minutes = Math.floor(elapsed / 60000)
+      const seconds = Math.floor((elapsed % 60000) / 1000)
+      setProcessingDuration(`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`)
+    }, 1000)
+    
+    setTimerInterval(interval)
+  }
+  
+  const stopProcessingTimer = () => {
+    if (timerInterval) {
+      clearInterval(timerInterval)
+      setTimerInterval(null)
+    }
+    setProcessingTimeStart(null)
+    setProcessingDuration('00:00')
+  }
 
   // Dropzone configuration
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -109,6 +145,7 @@ function MainPage() {
     setProcessing(true)
     setProcessingStatus('Processing audio file...')
     setTranscriptionResult('')
+    startProcessingTimer()
   
     try {
       const response = await fetch('http://localhost:5001/process_supabase_file', {
@@ -135,6 +172,7 @@ function MainPage() {
       setProcessingStatus(`Processing failed: ${error.message}`)
     } finally {
       setProcessing(false)
+      stopProcessingTimer()
     }
   }
 
@@ -339,6 +377,7 @@ function MainPage() {
                         <div className="processing-loader">
                           <div className="spinner"></div>
                           <div className="processing-text">{processingStatus}</div>
+                          <div className="processing-timer">Processing time: {processingDuration}</div>
                           <div className="processing-dots">
                             <div className="processing-dot"></div>
                             <div className="processing-dot"></div>
