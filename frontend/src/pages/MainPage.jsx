@@ -9,6 +9,7 @@ function MainPage() {
   const navigate = useNavigate()
 
   const [selectedResult, setSelectedResult] = useState('empty')
+  const [selectedInputMethod, setSelectedInputMethod] = useState('upload')
 
   const [processing, setProcessing] = useState(false)
   const [processingStatus, setProcessingStatus] = useState('')
@@ -137,6 +138,43 @@ function MainPage() {
     }
   }
 
+  const handleSummarizeText = async () => {
+    if (!transcriptionResult) {
+      alert('No transcription available to summarize. Please process the audio file first.')
+      return
+    }
+  
+    setProcessing(true)
+    setProcessingStatus('Summarizing transcription...')
+    setSummarisationResult('')
+  
+    try {
+      const response = await fetch('http://localhost:5001/summarize', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: transcriptionResult
+        })
+      })
+  
+      const data = await response.json()
+      
+      if (response.ok) {
+        setProcessingStatus('Summarizing completed!')
+        setSummarisationResult(data.summary)
+      } else {
+        setProcessingStatus(`Summarizing failed: ${data.error}`)
+      }
+    } catch (error) {
+      console.error('Summarizing error:', error)
+      setProcessingStatus(`Summarizing failed: ${error.message}`)
+    } finally {
+      setProcessing(false)
+    }
+  }
+
 
   const handleSummarizeFile = async () => {
     console.log('Summarizing transcription...')
@@ -236,8 +274,15 @@ function MainPage() {
             <ProfileDropdown />
           </div>
         </header>
+
+        <div className="input-method-controller">
+          <button onClick={() => setSelectedInputMethod('upload')} className={selectedInputMethod === 'upload' ? 'active' : ''}>Upload</button>
+          <button onClick={() => setSelectedInputMethod('text')} className={selectedInputMethod === 'text' ? 'active' : ''}>Text</button>
+        </div>
         
-        <main className="main-content">
+        { selectedInputMethod === 'upload' && (
+          <main className="main-content">
+          
           {/* Upload Section */}
           <section className="upload-section">
             <h2>Upload Audio/Video</h2>
@@ -274,139 +319,234 @@ function MainPage() {
             </div>
           </section>
           {/* Processing Section */}
-<section className="processing-section">
-  <h2>Processing</h2>
-  <div className="processing-area">
-    {uploadedFileUrl ? (
-      <div>
-        <p>File ready for processing!</p>
-        <button 
-          className="cta-button"
-          onClick={handleProcessFile}
-          disabled={processing}
-          style={{ marginTop: '1rem' }}
-        >
-          {processing ? 'Processing...' : 'Process Audio'}
-        </button>
-        {processingStatus && (
-          <div className="processing-status" style={{ marginTop: '1rem' }}>
-            {processing ? (
-              <div className="processing-loader">
-                <div className="spinner"></div>
-                <div className="processing-text">{processingStatus}</div>
-                <div className="processing-dots">
-                  <div className="processing-dot"></div>
-                  <div className="processing-dot"></div>
-                  <div className="processing-dot"></div>
+          <section className="processing-section">
+            <h2>Processing</h2>
+            <div className="processing-area">
+              {uploadedFileUrl ? (
+                <div>
+                  <p>File ready for processing!</p>
+                  <button 
+                    className="cta-button"
+                    onClick={handleProcessFile}
+                    disabled={processing}
+                    style={{ marginTop: '1rem' }}
+                  >
+                    {processing ? 'Processing...' : 'Process Audio'}
+                  </button>
+                  {processingStatus && (
+                    <div className="processing-status" style={{ marginTop: '1rem' }}>
+                      {processing ? (
+                        <div className="processing-loader">
+                          <div className="spinner"></div>
+                          <div className="processing-text">{processingStatus}</div>
+                          <div className="processing-dots">
+                            <div className="processing-dot"></div>
+                            <div className="processing-dot"></div>
+                            <div className="processing-dot"></div>
+                          </div>
+                        </div>
+                      ) : (
+                        <p className={transcriptionResult ? 'success' : 'error'}>
+                          {processingStatus}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
-              </div>
-            ) : (
-              <p className={transcriptionResult ? 'success' : 'error'}>
-                {processingStatus}
-              </p>
-            )}
-          </div>
-        )}
-      </div>
-    ) : (
-      <p>Upload a file first to begin processing</p>
-    )}
-  </div>
-</section>
+              ) : (
+                <p>Upload a file first to begin processing</p>
+              )}
+            </div>
+          </section>
 
-{/* Results Section */}
-<section className="results-section">
-  <button className="cta-button" onClick={() => setSelectedResult('empty')}>RESET</button>
-  <h2>Results</h2>
-  
-  <div className="results-controls">
-    <button 
-      className={selectedResult === 'transcription' ? 'active' : ''}
-      onClick={() => setSelectedResult('transcription')}
-    >
-      Transcription
-    </button>
-    <button 
-      className={selectedResult === 'summary' ? 'active' : ''}
-      onClick={() => setSelectedResult('summary')}
-    >
-      Summary
-    </button>
-    <button 
-      className={selectedResult === 'sentiment' ? 'active' : ''}
-      onClick={() => setSelectedResult('sentiment')}
-    >
-      Sentiment
-    </button>
-    <button 
-      className={selectedResult === 'objectDetection' ? 'active' : ''}
-      onClick={() => setSelectedResult('objectDetection')}
-    >
-      Object Detection
-    </button>
-  </div>
-  
-  <div className="result-content">
-    {selectedResult === 'transcription' && (
-      <div className="result-display">
-        <h3>Transcription</h3>
-        {transcriptionResult ? (
-          <div className="result-text">{transcriptionResult}</div>
-        ) : (
-          <div className="result-placeholder">
-            <p>No transcription available. Process an audio file first.</p>
-          </div>
-        )}
-      </div>
-    )}
-    
-    {selectedResult === 'summary' && (
-      <div className="result-display">
-        <h3>Summary</h3>
-        {summarisationResult ? (
-          <div className="result-text">{summarisationResult}</div>
-        ) : (
-          <div className="result-placeholder">
-            <p>No summary available yet.</p>
-            {transcriptionResult && (
-              <button onClick={handleSummarizeFile} className="cta-button">
-                Generate Summary
+          {/* Results Section */}
+          <section className="results-section">
+            <button className="cta-button" onClick={() => setSelectedResult('empty')}>RESET</button>
+            <h2>Results</h2>
+            
+            <div className="results-controls">
+              <button 
+                className={selectedResult === 'transcription' ? 'active' : ''}
+                onClick={() => setSelectedResult('transcription')}
+              >
+                Transcription
               </button>
-            )}
-            {!transcriptionResult && (
-              <p className="help-text">Process an audio file first to generate a summary.</p>
-            )}
-          </div>
+              <button 
+                className={selectedResult === 'summary' ? 'active' : ''}
+                onClick={() => setSelectedResult('summary')}
+              >
+                Summary
+              </button>
+              <button 
+                className={selectedResult === 'sentiment' ? 'active' : ''}
+                onClick={() => setSelectedResult('sentiment')}
+              >
+                Sentiment
+              </button>
+              <button 
+                className={selectedResult === 'objectDetection' ? 'active' : ''}
+                onClick={() => setSelectedResult('objectDetection')}
+              >
+                Object Detection
+              </button>
+            </div>
+            
+            <div className="result-content">
+              {selectedResult === 'transcription' && (
+                <div className="result-display">
+                  <h3>Transcription</h3>
+                  {transcriptionResult ? (
+                    <div className="result-text">{transcriptionResult}</div>
+                  ) : (
+                    <div className="result-placeholder">
+                      <p>No transcription available. Process an audio file first.</p>
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              {selectedResult === 'summary' && (
+                <div className="result-display">
+                  <h3>Summary</h3>
+                  {summarisationResult ? (
+                    <div className="result-text">{summarisationResult}</div>
+                  ) : (
+                    <div className="result-placeholder">
+                      <p>No summary available yet.</p>
+                      {transcriptionResult && (
+                        <button onClick={handleSummarizeFile} className="cta-button">
+                          Generate Summary
+                        </button>
+                      )}
+                      {!transcriptionResult && (
+                        <p className="help-text">Process an audio file first to generate a summary.</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              {selectedResult === 'sentiment' && (
+                <div className="result-display">
+                  <h3>Sentiment Analysis</h3>
+                  <div className="result-placeholder">
+                    <p>Sentiment analysis feature coming soon...</p>
+                  </div>
+                </div>
+              )}
+              
+              {selectedResult === 'objectDetection' && (
+                <div className="result-display">
+                  <h3>Object Detection</h3>
+                  <div className="result-placeholder">
+                    <p>Object detection feature coming soon...</p>
+                  </div>
+                </div>
+              )}
+              
+              {selectedResult === 'empty' && (
+                <div className="result-placeholder">
+                  <p>Select a result type above to view your processed data.</p>
+                </div>
+              )}
+            </div>
+          </section>
+          </main>
         )}
-      </div>
-    )}
-    
-    {selectedResult === 'sentiment' && (
-      <div className="result-display">
-        <h3>Sentiment Analysis</h3>
-        <div className="result-placeholder">
-          <p>Sentiment analysis feature coming soon...</p>
-        </div>
-      </div>
-    )}
-    
-    {selectedResult === 'objectDetection' && (
-      <div className="result-display">
-        <h3>Object Detection</h3>
-        <div className="result-placeholder">
-          <p>Object detection feature coming soon...</p>
-        </div>
-      </div>
-    )}
-    
-    {selectedResult === 'empty' && (
-      <div className="result-placeholder">
-        <p>Select a result type above to view your processed data.</p>
-      </div>
-    )}
-  </div>
-</section>
-        </main>
+
+
+        { selectedInputMethod === 'text' && (
+          <main className="main-content">
+          
+          {/* Upload Section */}
+          <section className="upload-section">
+            <h2>Upload Text</h2>
+            <div className="upload-content">
+              <textarea placeholder="Enter your text here..." value={transcriptionResult} onChange={(e) => setTranscriptionResult(e.target.value)} className="text-input"/>
+             
+            </div>
+          </section>
+
+          {/* Processing Button Only for text */}
+          <div className="processing-button-container">
+            <button 
+              className="cta-button"
+              onClick={handleSummarizeText}
+              disabled={processing}
+            >
+              {processing ? 'Summarizing...' : 'Summarize Text'}
+            </button>
+          </div>
+          
+
+          {/* Results Section */}
+          <section className="results-section">
+            <button className="cta-button" onClick={() => setSelectedResult('empty')}>RESET</button>
+            <h2>Results</h2>
+            
+            <div className="results-controls">
+              <button 
+                className={selectedResult === 'summary' ? 'active' : ''}
+                onClick={() => setSelectedResult('summary')}
+              >
+                Summary
+              </button>
+              <button 
+                className={selectedResult === 'sentiment' ? 'active' : ''}
+                onClick={() => setSelectedResult('sentiment')}
+              >
+                Sentiment
+              </button>
+            </div>
+            
+            <div className="result-content">
+              {selectedResult === 'summary' && (
+                <div className="result-display">
+                  <h3>Summary</h3>
+                  {summarisationResult ? (
+                    <div className="result-text">{summarisationResult}</div>
+                  ) : (
+                    <div className="result-placeholder">
+                      <p>No summary available yet.</p>
+                      {transcriptionResult && (
+                        <p className="help-text">Waiting for summary to be generated...</p>
+                      )}
+                      {!transcriptionResult && (
+                        <p className="help-text">Enter text to generate a summary.</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              {selectedResult === 'sentiment' && (
+                <div className="result-display">
+                  <h3>Sentiment Analysis</h3>
+                  <div className="result-placeholder">
+                    <p>Sentiment analysis feature coming soon...</p>
+                  </div>
+                </div>
+              )}
+              
+              {selectedResult === 'objectDetection' && (
+                <div className="result-display">
+                  <h3>Object Detection</h3>
+                  <div className="result-placeholder">
+                    <p>Object detection feature coming soon...</p>
+                  </div>
+                </div>
+              )}
+              
+              {selectedResult === 'empty' && (
+                <div className="result-placeholder">
+                  <p>Select a result type above to view your processed data.</p>
+                </div>
+              )}
+            </div>
+          </section>
+          </main>
+        )}
+        
       </div>
     );
   }
