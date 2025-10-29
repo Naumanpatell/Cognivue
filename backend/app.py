@@ -30,11 +30,25 @@ def transcribe():
     if '.' not in audio_file.filename or audio_file.filename.rsplit('.', 1)[1].lower() not in allowed_extensions:
         return jsonify({'error': 'Invalid file type. Please upload WAV, MP3, M4A, or WebM files.'}), 400
     
+    # Get optional parameters for parallel processing
+    use_parallel = request.form.get('use_parallel', 'true').lower() == 'true'
+    num_processes = int(request.form.get('num_processes', 2))
+    segment_length = int(request.form.get('segment_length', 30))
+    
     try:
         start_time = time.time()
         print(f"Starting transcription at {time.strftime('%H:%M:%S')}")
         
-        transcribed_text = transcribe_audio(audio_file)
+        if use_parallel:
+            print(f"Using parallel processing with {num_processes} processes, {segment_length}s segments")
+            transcribed_text = transcribe_audio_parallel(
+                audio_file, 
+                num_processes=num_processes, 
+                segment_length=segment_length
+            )
+        else:
+            print("Using sequential processing")
+            transcribed_text = transcribe_audio(audio_file)
         
         end_time = time.time()
         duration = end_time - start_time
@@ -47,7 +61,10 @@ def transcribe():
         return jsonify({
             'transcription': transcribed_text,
             'processing_time': duration_formatted,
-            'processing_time_seconds': round(duration, 2)
+            'processing_time_seconds': round(duration, 2),
+            'processing_method': 'parallel' if use_parallel else 'sequential',
+            'num_processes': num_processes if use_parallel else 1,
+            'segment_length': segment_length if use_parallel else None
         })
     except Exception as e:
         print(f"Transcription error: {str(e)}")
@@ -124,7 +141,9 @@ def process_supabase_file():
         print(f"Starting Supabase transcription at {time.strftime('%H:%M:%S')}")
         
         response = supabase.storage.from_(bucket_name).download(file_name)
-        result = transcribe_audio(response)
+        
+        # Use parallel processing for Supabase files too
+        result = transcribe_audio_parallel(response, num_processes=2, segment_length=30)
         
         # Stop timer and calculate duration
         end_time = time.time()

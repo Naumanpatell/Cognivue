@@ -53,7 +53,7 @@ function ProfileDropdown() {
   const handleMenuItemClick = (action) => {
     switch(action) {
       case 'profile':
-        console.log('Profile button pressed');
+        navigate('/profile');
         break;
       case 'settings':
         console.log('Settings button pressed');
@@ -103,7 +103,7 @@ function ProfileDropdown() {
             position: 'fixed',
             top: `${dropdownPosition.top}px`,
             right: `${dropdownPosition.right}px`,
-            zIndex: 1000000000000
+            zIndex: 2147483647
           }}
         >
           <div className="menu-item" onClick={() => handleMenuItemClick('profile')}>
