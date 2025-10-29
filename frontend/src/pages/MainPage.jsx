@@ -164,6 +164,7 @@ function MainPage() {
       if (response.ok) {
         setProcessingStatus('Processing completed!')
         setTranscriptionResult(data.transcription)
+        setSelectedResult('transcription') 
       } else {
         setProcessingStatus(`Processing failed: ${data.error}`)
       }
@@ -293,13 +294,6 @@ function MainPage() {
       setRenaming(false)
     }
   }
-  
-  
-
-  
-  
-
-
     return (
       <div className="main-container">
         <header className="main-header">
