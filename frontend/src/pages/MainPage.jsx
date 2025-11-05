@@ -20,6 +20,7 @@ function MainPage() {
   const [transcriptionResult, setTranscriptionResult] = useState('')
   const [summarisationResult, setSummarisationResult] = useState('')
   const [uploadedFileName, setUploadedFileName] = useState('')
+  const [summarizationError, setSummarizationError] = useState('')
 
   const [renaming, setRenaming] = useState(false)
 
@@ -119,6 +120,7 @@ function MainPage() {
     setSummarisationResult('')
     setTranscriptionResult('')
     setSelectedResult('empty')
+    setSummarizationError('')
 
     try {
       const result = await handleUpload(file)
@@ -186,6 +188,7 @@ function MainPage() {
     setProcessing(true)
     setProcessingStatus('Summarizing transcription...')
     setSummarisationResult('')
+    setSummarizationError('')
   
     try {
       const response = await fetch('http://localhost:5001/summarize', {
@@ -203,12 +206,17 @@ function MainPage() {
       if (response.ok) {
         setProcessingStatus('Summarizing completed!')
         setSummarisationResult(data.summary)
+        setSummarizationError('')
       } else {
-        setProcessingStatus(`Summarizing failed: ${data.error}`)
+        const errorMessage = data.error || 'Unknown error occurred during summarization'
+        setProcessingStatus(`Summarizing failed: ${errorMessage}`)
+        setSummarizationError(errorMessage)
       }
     } catch (error) {
       console.error('Summarizing error:', error)
-      setProcessingStatus(`Summarizing failed: ${error.message}`)
+      const errorMessage = error.message || 'Network error occurred during summarization'
+      setProcessingStatus(`Summarizing failed: ${errorMessage}`)
+      setSummarizationError(errorMessage)
     } finally {
       setProcessing(false)
     }
@@ -225,6 +233,7 @@ function MainPage() {
     setProcessing(true)
     setProcessingStatus('Summarizing transcription...')
     setSummarisationResult('')
+    setSummarizationError('')
   
     try {
       const response = await fetch('http://localhost:5001/summarize', {
@@ -242,12 +251,17 @@ function MainPage() {
       if (response.ok) {
         setProcessingStatus('Summarizing completed!')
         setSummarisationResult(data.summary)
+        setSummarizationError('')
       } else {
-        setProcessingStatus(`Summarizing failed: ${data.error}`)
+        const errorMessage = data.error || 'Unknown error occurred during summarization'
+        setProcessingStatus(`Summarizing failed: ${errorMessage}`)
+        setSummarizationError(errorMessage)
       }
     } catch (error) {
       console.error('Summarizing error:', error)
-      setProcessingStatus(`Summarizing failed: ${error.message}`)
+      const errorMessage = error.message || 'Network error occurred during summarization'
+      setProcessingStatus(`Summarizing failed: ${errorMessage}`)
+      setSummarizationError(errorMessage)
     } finally {
       setProcessing(false)
     }
@@ -394,7 +408,10 @@ function MainPage() {
 
           {/* Results Section */}
           <section className="results-section">
-            <button className="cta-button" onClick={() => setSelectedResult('empty')}>RESET</button>
+            <button className="cta-button" onClick={() => {
+              setSelectedResult('empty')
+              setSummarizationError('')
+            }}>RESET</button>
             <h2>Results</h2>
             
             <div className="results-controls">
@@ -441,6 +458,32 @@ function MainPage() {
               {selectedResult === 'summary' && (
                 <div className="result-display">
                   <h3>Summary</h3>
+                  {summarizationError && (
+                    <div className="error-message" style={{ 
+                      backgroundColor: '#fee', 
+                      border: '1px solid #fcc', 
+                      borderRadius: '4px', 
+                      padding: '12px', 
+                      marginBottom: '12px',
+                      color: '#c33'
+                    }}>
+                      <strong>Error:</strong> {summarizationError}
+                      <button 
+                        onClick={() => setSummarizationError('')} 
+                        style={{ 
+                          float: 'right', 
+                          background: 'none', 
+                          border: 'none', 
+                          color: '#c33', 
+                          cursor: 'pointer',
+                          fontSize: '16px'
+                        }}
+                        title="Dismiss error"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  )}
                   {summarisationResult ? (
                     <div className="result-text">{summarisationResult}</div>
                   ) : (
@@ -514,7 +557,10 @@ function MainPage() {
 
           {/* Results Section */}
           <section className="results-section">
-            <button className="cta-button" onClick={() => setSelectedResult('empty')}>RESET</button>
+            <button className="cta-button" onClick={() => {
+              setSelectedResult('empty')
+              setSummarizationError('')
+            }}>RESET</button>
             <h2>Results</h2>
             
             <div className="results-controls">
@@ -536,6 +582,32 @@ function MainPage() {
               {selectedResult === 'summary' && (
                 <div className="result-display">
                   <h3>Summary</h3>
+                  {summarizationError && (
+                    <div className="error-message" style={{ 
+                      backgroundColor: '#fee', 
+                      border: '1px solid #fcc', 
+                      borderRadius: '4px', 
+                      padding: '12px', 
+                      marginBottom: '12px',
+                      color: '#c33'
+                    }}>
+                      <strong>Error:</strong> {summarizationError}
+                      <button 
+                        onClick={() => setSummarizationError('')} 
+                        style={{ 
+                          float: 'right', 
+                          background: 'none', 
+                          border: 'none', 
+                          color: '#c33', 
+                          cursor: 'pointer',
+                          fontSize: '16px'
+                        }}
+                        title="Dismiss error"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  )}
                   {summarisationResult ? (
                     <div className="result-text">{summarisationResult}</div>
                   ) : (

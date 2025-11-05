@@ -94,8 +94,9 @@ def summarize():
         duration_formatted = format_duration(duration)
         print(f"Summarization completed in {duration_formatted} (MM:SS)")
         
-        if not summary:
-            return jsonify({'error': 'Summarization failed - no summary was generated'}), 400
+        # added this to check if summary failed
+        if not summary or summary.startswith("Failed to") or summary.startswith("GPU/") or summary.startswith("Insufficient") or summary.startswith("Token limit") or summary.startswith("Summarization model") or summary.startswith("Unexpected error"):
+            return jsonify({'error': summary or 'Summarization failed - no summary was generated'}), 400
         
         return jsonify({
             'summary': summary,
