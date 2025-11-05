@@ -1,7 +1,7 @@
 import time
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from models.asr_model import transcribe_audio, transcribe_audio_parallel
+from models.asr_model import transcribe_audio
 from models.summarizer_model import summarize_text, get_available_summarizers
 from utils.supabase_clients import supabase
 

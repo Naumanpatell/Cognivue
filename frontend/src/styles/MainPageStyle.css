@@ -40,6 +40,12 @@
   * {
     box-sizing: border-box;
   }
+
+.processing-timer {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 0.5rem;
+}
   
 .main-container {
   min-height: 100vh;
