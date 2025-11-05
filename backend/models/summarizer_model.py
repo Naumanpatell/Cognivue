@@ -60,7 +60,7 @@ def summarize_with_bart(text, max_length, min_length):
     except Exception as e:
         error_msg = f"BART Summarization Failed: {e}"
         print(error_msg)
-        # Return a more descriptive error message
+
         if "CUDA" in str(e) or "GPU" in str(e):
             return f"GPU/CUDA error during summarization: {e}"
         elif "memory" in str(e).lower():
@@ -83,7 +83,6 @@ def summarize_text(text, max_length, min_length):
             return result
         
         # For long texts, use chunking
-        print(f"Text too long ({len(text)} chars), using chunking strategy")
         chunks = split_text_into_chunks(text)
         print(f"Split into {len(chunks)} chunks")
         
@@ -106,6 +105,3 @@ def summarize_text(text, max_length, min_length):
         error_msg = f"Unexpected error during summarization: {e}"
         print(error_msg)
         return error_msg
-
-def get_available_summarizers():
-    return ["facebook/bart-large-cnn", "google/pegasus-xsum", "t5-small"]

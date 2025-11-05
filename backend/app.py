@@ -1,8 +1,8 @@
 import time
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from models.asr_model import transcribe_audio
-from models.summarizer_model import summarize_text, get_available_summarizers
+from models.asr_model import transcribe_audio_sequential , transcribe_audio_parallel, get_available_asr_models
+from models.summarizer_model import summarize_text
 from utils.supabase_clients import supabase
 
 app = Flask(__name__)
@@ -48,7 +48,7 @@ def transcribe():
             )
         else:
             print("Using sequential processing")
-            transcribed_text = transcribe_audio(audio_file)
+            transcribed_text = transcribe_audio_sequential(audio_file)
         
         end_time = time.time()
         duration = end_time - start_time
@@ -115,7 +115,7 @@ def summarize():
 def get_summarizers():
     """Get available summarizer models"""
     try:
-        models = get_available_summarizers()
+        models =  get_available_asr_models()
         return jsonify({
             'available_models': models,
             'current_model': 'facebook/bart-large-cnn'
